@@ -2,6 +2,8 @@
 # folders
 node_modules
 dist
+prisma
 
 # archives
 yarn.lock
+.env
