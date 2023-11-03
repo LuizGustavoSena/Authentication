@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx src/server.ts",
     "start:prd": "node dist/server.js",
-    "build": "tsup src"
+    "build": "tsup src",
+    "test": "vitest"
   },
   "dependencies": {
     "fastify": "4.24.3"
