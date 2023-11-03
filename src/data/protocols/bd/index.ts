@@ -1,11 +1,9 @@
 export interface BdClient {
-    request<T>(params: Request): Promise<Response<T>>
+    createModel<T>(params: ModelRequest<T>): Promise<void>;
+    getModel<P, R>(params: ModelRequest<P>): Promise<R>
 };
 
-export type Request = {
-    command: string;
-};
-
-export type Response<T> = {
+export type ModelRequest<T> = {
+    model: string;
     body: T;
 };

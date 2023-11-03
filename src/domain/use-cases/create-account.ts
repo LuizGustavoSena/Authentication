@@ -1,13 +1,9 @@
 export interface CreateAccount {
-    createAccount(params: RequestCreateAccount): Promise<ResponseCreateAccount>;
+    createAccount(params: RequestCreateAccount): Promise<void>;
 }
 
 export type RequestCreateAccount = {
     username: string;
     email: string;
     password: string;
-}
-
-export type ResponseCreateAccount = {
-    token: string;
 }
