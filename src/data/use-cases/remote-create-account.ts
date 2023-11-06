@@ -1,9 +1,10 @@
 import { SameEmailError } from "../../domain/error/same-email-error";
 import { User } from "../../domain/models";
 import { CreateAccount, RequestCreateAccount } from "../../domain/use-cases";
+import { LoginAccount, RequestLoginAccount, ResponseLoginAccount } from "../../domain/use-cases/login-account";
 import { BdClient } from "../protocols/bd";
 
-export class RemoteCreateAccount implements CreateAccount {
+export class RemoteAccount implements CreateAccount, LoginAccount {
     constructor(
         private bdClient: BdClient
     ) { };
@@ -27,5 +28,9 @@ export class RemoteCreateAccount implements CreateAccount {
                 username: params.username
             }
         });
+    };
+
+    async loginAccount(params: RequestLoginAccount): Promise<ResponseLoginAccount> {
+        throw new Error("Method not implemented.");
     };
 }

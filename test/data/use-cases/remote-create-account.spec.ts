@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { RemoteCreateAccount } from "../../../src/data/use-cases/remote-create-account";
+import { RemoteAccount } from "../../../src/data/use-cases/remote-create-account";
 import { SameEmailError } from '../../../src/domain/error/same-email-error';
 import { BdClientSpy } from "../mocks/mock-bd";
 
 type Props = {
-    sut: RemoteCreateAccount;
+    sut: RemoteAccount;
     bdClietnSpy: BdClientSpy;
 }
 
 const makeSut = () => {
     const bdClietnSpy = new BdClientSpy();
-    const sut = new RemoteCreateAccount(bdClietnSpy);
+    const sut = new RemoteAccount(bdClietnSpy);
 
     return {
         sut,
@@ -18,7 +18,7 @@ const makeSut = () => {
     }
 }
 
-describe('RemoteCreateAccount', () => {
+describe('RemoteAccount', () => {
     it('Should correct params', async () => {
         const { sut, bdClietnSpy } = makeSut();
 
