@@ -22,11 +22,11 @@ export class BdClientSpy implements BdClient {
         if (!this.results[params.model])
             return null;
 
-        const haveModel = this.results[params.model].find((el: any) => {
-            Object.keys(params.body).forEach(key =>
+        const haveModel = this.results[params.model].find((el: any) =>
+            !Object.keys(params.body).map(key =>
                 el[key] === params.body[key]
-            )
-        });
+            ).includes(false)
+        );
 
         if (!haveModel)
             return null;
