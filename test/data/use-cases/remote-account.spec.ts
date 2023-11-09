@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 import { RemoteAccount } from "../../../src/data/use-cases/remote-account";
+import { InvalidCredentialsError } from '../../../src/domain/error/invalid-credentials-error';
 import { SameEmailError } from '../../../src/domain/error/same-email-error';
 import { requestCreateAccount, requestLoginAccount } from '../../domain/mocks/remote-account';
 import { BdClientSpy } from "../mocks/mock-bd";
@@ -54,7 +55,7 @@ describe('RemoteAccount', () => {
     });
 
     it('Should token with correct authentication', async () => {
-        const { sut, bdClietnSpy, tokenSpy } = makeSut();
+        const { sut, tokenSpy } = makeSut();
 
         const createRequest = requestCreateAccount();
         const loginRequest = requestLoginAccount({
@@ -68,5 +69,16 @@ describe('RemoteAccount', () => {
 
         expect(tokenSpy.token).toBe(`${createRequest.email}token`);
         expect(response.token).toBe(tokenSpy.token);
-    })
-})
+    });
+
+    it('Should correct error with invalid credential', async () => {
+        const { sut } = makeSut();
+
+        const request = requestCreateAccount();
+        const anotherAccount = requestLoginAccount();
+
+        await sut.createAccount(request);
+
+        await expect(sut.loginAccount(anotherAccount)).rejects.toThrow(new InvalidCredentialsError());
+    });
+});

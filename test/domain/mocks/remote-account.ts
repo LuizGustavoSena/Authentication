@@ -10,7 +10,7 @@ export const requestCreateAccount = (props?: Partial<RequestCreateAccount>): Req
     }
 };
 
-export const requestLoginAccount = (props: Partial<RequestLoginAccount>): RequestLoginAccount => {
+export const requestLoginAccount = (props?: Partial<RequestLoginAccount>): RequestLoginAccount => {
     return {
         email: props?.email ?? faker.internet.email(),
         password: props?.password ?? faker.word.words()
