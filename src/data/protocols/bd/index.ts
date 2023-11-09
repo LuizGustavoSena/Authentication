@@ -5,5 +5,5 @@ export interface BdClient {
 
 export type ModelRequest<T> = {
     model: string;
-    body: T | any;
+    body: T;
 };
