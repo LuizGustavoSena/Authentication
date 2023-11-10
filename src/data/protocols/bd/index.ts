@@ -1,9 +1,11 @@
+import { User } from "../../../domain/models";
+
 export interface BdClient {
-    createModel<T>(params: ModelRequest<T>): Promise<void>;
-    getModel<P, R>(params: ModelRequest<P>): Promise<R | null>
+    createUser(params: User): Promise<void>;
+    haveUser(params: RequestHaveUser): Promise<boolean>
 };
 
-export type ModelRequest<T> = {
-    model: string;
-    body: T;
-};
+export type RequestHaveUser = {
+    email: string;
+    password?: string;
+}

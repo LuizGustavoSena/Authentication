@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
+import { RequestLoginAccount } from "../../../src/domain/models";
 import { RequestCreateAccount } from "../../../src/domain/use-cases";
-import { RequestLoginAccount } from "../../../src/domain/use-cases/login-account";
 
 export const requestCreateAccount = (props?: Partial<RequestCreateAccount>): RequestCreateAccount => {
     return {

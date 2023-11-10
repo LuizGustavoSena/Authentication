@@ -1,37 +1,36 @@
-import { BdClient, ModelRequest } from "../../../src/data/protocols/bd";
+import { BdClient, RequestHaveUser } from "../../../src/data/protocols/bd";
+import { User } from "../../../src/domain/models";
 
 export class BdClientSpy implements BdClient {
     results: any = {};
     model: string;
     body: any;
 
-    async createModel<T>(params: ModelRequest<T>): Promise<void> {
-        this.body = params.body;
-        this.model = params.model;
+    async createUser(params: User): Promise<void> {
+        this.body = params;
 
-        if (!this.results[params.model])
-            this.results[params.model] = [];
+        if (!this.results.users)
+            this.results.users = [];
 
-        this.results[params.model].push(params.body);
+        this.results.users.push(params);
     }
 
-    async getModel<P, R>(params: ModelRequest<P>): Promise<R | null> {
-        this.body = params.body;
-        this.model = params.model;
+    async haveUser(params: RequestHaveUser): Promise<boolean> {
+        this.body = params;
 
-        if (!this.results[params.model])
-            return null;
+        if (!this.results.users)
+            return false;
 
-        const haveModel = this.results[params.model].find((el: any) =>
-            !Object.keys(params.body).map(key =>
-                el[key] === params.body[key]
+        const haveModel = this.results.users.find((el: any) =>
+            !Object.keys(this.body).map(key =>
+                el[key] === this.body[key]
             ).includes(false)
         );
 
         if (!haveModel)
-            return null;
+            return false;
 
-        return haveModel;
+        return true;
     }
 
 }

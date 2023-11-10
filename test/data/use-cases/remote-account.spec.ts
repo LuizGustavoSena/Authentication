@@ -34,7 +34,6 @@ describe('RemoteAccount', () => {
         await sut.createAccount(request);
 
         expect(bdClietnSpy.body).toEqual(request);
-        expect(bdClietnSpy.model).toBe('User');
     });
 
     it('Should throw erros with equal email', async () => {
@@ -51,7 +50,7 @@ describe('RemoteAccount', () => {
         const promise = sut.createAccount(anotherRequest);
 
         await expect(promise).rejects.toThrow(new SameEmailError());
-        expect(bdClietnSpy.results.User.length).toBe(1);
+        expect(bdClietnSpy.results.users.length).toBe(1);
     });
 
     it('Should token with correct authentication', async () => {
