@@ -19,8 +19,6 @@ export class BbPrismaClient implements BdClient {
                 username
             }
         });
-
-        throw new Error("Method not implemented.");
     }
 
     haveUser(params: RequestHaveUser): Promise<boolean> {
