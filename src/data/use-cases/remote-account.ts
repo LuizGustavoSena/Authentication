@@ -13,18 +13,15 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
     ) { };
 
     async createAccount(params: RequestCreateAccount): Promise<void> {
-        const haveUser = await this.bdClient.haveUser({
-            email: params.email
-        });
-
-        if (haveUser)
+        try {
+            await this.bdClient.createUser({
+                email: params.email,
+                password: params.password,
+                username: params.username
+            });
+        } catch (error) {
             throw new SameEmailError();
-
-        await this.bdClient.createUser({
-            email: params.email,
-            password: params.password,
-            username: params.username
-        });
+        }
     };
 
     async loginAccount(params: RequestLoginAccount): Promise<ResponseLoginAccount> {
