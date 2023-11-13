@@ -21,8 +21,16 @@ export class BbPrismaClient implements BdClient {
         });
     }
 
-    haveUser(params: RequestHaveUser): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
+    async haveUser(params: RequestHaveUser): Promise<boolean> {
+        const { email, password } = params;
 
+        const results = await this.prisma.users.findFirst({
+            where: {
+                email,
+                password
+            }
+        });
+
+        return !!results;
+    }
 }

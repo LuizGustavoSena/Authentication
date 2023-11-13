@@ -7,5 +7,5 @@ export interface BdClient {
 
 export type RequestHaveUser = {
     email: string;
-    password?: string;
+    password: string;
 }
