@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { BdClient, RequestHaveUser } from "../../data/protocols/bd";
 import { User } from "../../domain/models";
 
-export class BbPrismaClient implements BdClient {
+export class BdPrismaClient implements BdClient {
     prisma: PrismaClient;
 
     constructor() {
