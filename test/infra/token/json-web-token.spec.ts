@@ -17,11 +17,14 @@ describe('JsonWebToken', () => {
     it('Should correct token', () => {
         const { sut } = makeSut();
 
-        const response = sut.generate({
-            email: faker.internet.email()
-        });
+        const email = faker.internet.email();
+
+        const response = sut.generate({ email });
+
+        const validToken = sut.validate(response.token);
 
         expect(response.token).toString();
+        expect(validToken.email).toBe(email);
     });
 
     it('Should correct token with validate method', () => {
@@ -33,7 +36,7 @@ describe('JsonWebToken', () => {
 
         const validatedToken = sut.validate(response.token);
 
-        expect(validatedToken).true;
+        expect(validatedToken).not.toBeNull();
     });
 
     it('Should invalid token with validate method', () => {
@@ -43,6 +46,6 @@ describe('JsonWebToken', () => {
 
         const validatedToken = sut.validate(any_token);
 
-        expect(validatedToken).false;
+        expect(validatedToken).toBeNull();
     });
 });

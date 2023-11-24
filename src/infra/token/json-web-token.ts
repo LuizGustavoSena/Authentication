@@ -1,6 +1,6 @@
 require('dotenv/config');
 import { decode, encode } from "jwt-simple";
-import { RequestToken, ResponseToken, Token } from "../../data/protocols/token";
+import { RequestToken, ResponseToken, ResponseValidate, Token } from "../../data/protocols/token";
 
 export class JsonWebToken implements Token {
 
@@ -20,13 +20,13 @@ export class JsonWebToken implements Token {
         return { token };
     }
 
-    validate(token: string): boolean {
+    validate(token: string): ResponseValidate {
         try {
             const result = decode(token, String(process.env.SECRETKEY), false, 'HS512');
 
-            return !!result
+            return result
         } catch (error) {
-            return false;
+            return null;
         }
     }
 }
