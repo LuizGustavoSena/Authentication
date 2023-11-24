@@ -2,29 +2,28 @@ import { BdClient, RequestHaveUser } from "../../../src/data/protocols/bd";
 import { User } from "../../../src/domain/models";
 
 export class BdClientSpy implements BdClient {
-    results: any = {};
+    users: User[] = [];
     model: string;
     body: any;
 
     async createUser(params: User): Promise<void> {
         this.body = params;
 
-        if (!this.results.users)
-            this.results.users = [];
+        if (this.users.find(el => el.email === params.email))
+            throw new Error();
 
-        this.results.users.push(params);
+        this.users.push(params);
     }
 
     async haveUser(params: RequestHaveUser): Promise<boolean> {
         this.body = params;
 
-        if (!this.results.users)
+        if (this.users.length === 0)
             return false;
 
-        const haveModel = this.results.users.find((el: any) =>
-            !Object.keys(this.body).map(key =>
-                el[key] === this.body[key]
-            ).includes(false)
+        const haveModel = this.users.find(el =>
+            el.email === params.email &&
+            el.password === params.password
         );
 
         if (!haveModel)
