@@ -1,8 +1,7 @@
 import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
 import { SameEmailError } from "../../domain/error/same-email-error";
 import { RequestLoginAccount, ResponseLoginAccount } from "../../domain/models";
-import { CreateAccount, RequestCreateAccount } from "../../domain/use-cases";
-import { LoginAccount } from "../../domain/use-cases/login-account";
+import { CreateAccount, LoginAccount, RequestCreateAccount } from "../../domain/use-cases";
 import { BdClient } from "../protocols/bd";
 import { Token } from "../protocols/token";
 
