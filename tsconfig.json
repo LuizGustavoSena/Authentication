@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "target": "es2020",
     "module": "commonjs",

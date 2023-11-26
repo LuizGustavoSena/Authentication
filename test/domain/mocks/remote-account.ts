@@ -6,7 +6,7 @@ export const requestCreateAccount = (props?: Partial<RequestCreateAccount>): Req
     return {
         email: props?.email ?? faker.internet.email(),
         password: props?.password ?? faker.word.words(),
-        username: props?.username ?? faker.name.firstName()
+        username: props?.username ?? faker.person.firstName()
     }
 };
 

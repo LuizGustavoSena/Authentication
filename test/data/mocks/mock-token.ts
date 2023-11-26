@@ -1,5 +1,5 @@
-import { RequestToken, ResponseToken, Token } from "../../../src/data/protocols/token";
-
+require('dotenv/config');
+import { RequestToken, ResponseToken, ResponseValidate, Token } from "../../../src/data/protocols/token";
 export class TokenSpy implements Token {
     token: string;
 
@@ -10,4 +10,17 @@ export class TokenSpy implements Token {
             token: this.token
         }
     }
+
+    validate(token: string): ResponseValidate {
+        if (this.token !== `${token}token`)
+            return null;
+
+        const date = new Date().getTime();
+
+        return {
+            email: this.token.replace('token', ''),
+            issued: date,
+            expires: date + Number(process.env.EXPIRESTOKENMILLISECONDS)
+        }
+    };
 }
