@@ -1,4 +1,5 @@
-import { BdClient, RequestHaveUser } from "../../../src/data/protocols/bd";
+import { faker } from "@faker-js/faker";
+import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../../src/data/protocols/bd";
 import { User } from "../../../src/domain/models";
 
 export class BdClientSpy implements BdClient {
@@ -6,13 +7,18 @@ export class BdClientSpy implements BdClient {
     model: string;
     body: any;
 
-    async createUser(params: User): Promise<void> {
+    async createUser(params: User): Promise<ResponseCreateUser> {
         this.body = params;
 
         if (this.users.find(el => el.email === params.email))
             throw new Error();
 
         this.users.push(params);
+
+        return {
+            id: faker.word.words(),
+            ...params
+        }
     }
 
     async haveUser(params: RequestHaveUser): Promise<boolean> {
