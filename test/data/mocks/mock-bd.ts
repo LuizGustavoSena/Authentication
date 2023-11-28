@@ -27,10 +27,12 @@ export class BdClientSpy implements BdClient {
         if (this.users.length === 0)
             return false;
 
-        const haveModel = this.users.find(el =>
-            el.email === params.email &&
-            el.password === params.password
-        );
+        const haveModel = this.users.find(el => {
+            if (params.password)
+                return el.email === params.email && el.password === params.password;
+
+            return el.email === params.email;
+        });
 
         if (!haveModel)
             return false;
