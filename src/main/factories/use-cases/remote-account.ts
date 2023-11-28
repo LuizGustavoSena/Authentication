@@ -3,7 +3,7 @@ import { CreateAccount, LoginAccount } from "../../../domain/use-cases";
 import { makeBdPrimaClient } from "../bdClient/bd-prisma-client";
 import { makeJsonWebToken } from "../token/json-web-token";
 
-const makeRemoteAccount = (): CreateAccount & LoginAccount => new RemoteAccount(
+export const makeRemoteAccount = (): CreateAccount & LoginAccount => new RemoteAccount(
     makeBdPrimaClient(),
     makeJsonWebToken()
 );
