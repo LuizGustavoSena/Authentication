@@ -1,15 +1,20 @@
-import { BbPrismaClient } from "./infra/bdClient/bdPrismaClient";
+import Fastify from 'fastify';
+import * as AccountControler from './main/controllers/remote-account';
+import * as ValidateControler from './main/controllers/remote-validate-token';
 
-const dbClient = new BbPrismaClient();
+const fastify = Fastify({
+    logger: true
+});
 
-const execute = async () => {
-    await dbClient.createUser({
-        email: 'luizgbs1@gmail.com',
-        password: 'password',
-        username: 'LuizBs'
-    });
+fastify.post('/create_account', AccountControler.createAccount);
 
-    console.log('deu certo');
-}
+fastify.post('/login_account', AccountControler.loginAccount);
 
-execute();
+fastify.get('/validate_token', ValidateControler.validateToken);
+
+fastify.listen({ port: 3000 }, function (err, address) {
+    if (err) {
+        fastify.log.error(err)
+        process.exit(1)
+    }
+})

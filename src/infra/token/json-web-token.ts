@@ -32,6 +32,5 @@ export class JsonWebToken implements Token {
         } catch (error) {
             return null;
         }
-
     }
 }

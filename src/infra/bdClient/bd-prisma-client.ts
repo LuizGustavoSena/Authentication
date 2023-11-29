@@ -1,24 +1,26 @@
 import { PrismaClient } from "@prisma/client";
-import { BdClient, RequestHaveUser } from "../../data/protocols/bd";
+import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../data/protocols/bd";
 import { User } from "../../domain/models";
 
-export class BbPrismaClient implements BdClient {
+export class BdPrismaClient implements BdClient {
     prisma: PrismaClient;
 
     constructor() {
         this.prisma = new PrismaClient();
     }
 
-    async createUser(params: User): Promise<void> {
+    async createUser(params: User): Promise<ResponseCreateUser> {
         const { email, password, username } = params;
 
-        await this.prisma.users.create({
+        const createUser = await this.prisma.users.create({
             data: {
                 email,
                 password,
                 username
             }
         });
+
+        return createUser;
     }
 
     async haveUser(params: RequestHaveUser): Promise<boolean> {
