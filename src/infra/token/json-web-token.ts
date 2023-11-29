@@ -21,12 +21,11 @@ export class JsonWebToken implements Token {
     }
 
     validate(token: string): ResponseValidate {
-        try {
-            const result = decode(token, String(process.env.SECRETKEY), false, 'HS512');
+        const result = decode(token, String(process.env.SECRETKEY), false, 'HS512');
 
-            return result
-        } catch (error) {
+        if (!result || result.expires < new Date())
             return null;
-        }
+
+        return result
     }
 }
