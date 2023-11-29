@@ -48,4 +48,18 @@ describe('JsonWebToken', () => {
 
         expect(validatedToken).toBeNull();
     });
+
+    it('Should invalid token expirated', () => {
+        const { sut } = makeSut();
+
+        sut.expirationInMilliseconds = - 10;
+
+        const response = sut.generate({
+            email: faker.internet.email()
+        });
+
+        const validatedToken = sut.validate(response.token);
+
+        expect(validatedToken).toBeNull();
+    });
 });

@@ -3,6 +3,7 @@ import { decode, encode } from "jwt-simple";
 import { RequestToken, ResponseToken, ResponseValidate, Token } from "../../data/protocols/token";
 
 export class JsonWebToken implements Token {
+    expirationInMilliseconds = Number(process.env.EXPIRESTOKENMILLISECONDS);
 
     generate(params: RequestToken): ResponseToken {
         const issued = Date.now();
@@ -11,7 +12,7 @@ export class JsonWebToken implements Token {
             {
                 ...params,
                 issued: issued,
-                expires: issued + Number(process.env.EXPIRESTOKENMILLISECONDS)
+                expires: issued + this.expirationInMilliseconds
             },
             String(process.env.SECRETKEY),
             "HS512"
@@ -21,11 +22,15 @@ export class JsonWebToken implements Token {
     }
 
     validate(token: string): ResponseValidate {
-        const result = decode(token, String(process.env.SECRETKEY), false, 'HS512');
+        try {
+            const result = decode(token, String(process.env.SECRETKEY), false, 'HS512');
 
-        if (!result || result.expires < new Date())
+            if (!result || result.expires < new Date())
+                return null;
+
+            return result
+        } catch (error) {
             return null;
-
-        return result
+        }
     }
 }
