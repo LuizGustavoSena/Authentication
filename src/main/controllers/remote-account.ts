@@ -41,7 +41,7 @@ export const loginAccount = async (req: FastifyRequest, rep: FastifyReply) => {
         rep.send(token);
     } catch (error: any) {
         rep.statusCode = error instanceof InvalidCredentialsError ?
-            400 : 500;
+            401 : 500;
 
         rep.send(error.message);
     }
