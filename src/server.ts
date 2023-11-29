@@ -6,11 +6,11 @@ const fastify = Fastify({
     logger: true
 });
 
-fastify.post('/create', AccountControler.createAccount);
+fastify.post('/create_account', AccountControler.createAccount);
 
-fastify.post('/login', AccountControler.loginAccount);
+fastify.post('/login_account', AccountControler.loginAccount);
 
-fastify.get('/validate', ValidateControler.validateToken);
+fastify.get('/validate_token', ValidateControler.validateToken);
 
 fastify.listen({ port: 3000 }, function (err, address) {
     if (err) {
