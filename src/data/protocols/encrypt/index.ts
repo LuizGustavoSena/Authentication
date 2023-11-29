@@ -1,3 +1,4 @@
 export interface Encrypt {
-    execute(data: string): string;
+    encrypt(data: string): string;
+    decrypt(data: string): string;
 }
