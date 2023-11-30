@@ -20,7 +20,7 @@ export class TokenSpy implements Token {
         return {
             email: this.token.replace('token', ''),
             issued: date,
-            expires: date + Number(process.env.EXPIRESTOKENMILLISECONDS)
+            expires: date + Number(process.env.EXPIRES_TOKEN_MILLISECONDS)
         }
     };
 }

@@ -5,35 +5,42 @@ import { InvalidCredentialsError } from '../../../src/domain/error/invalid-crede
 import { SameEmailError } from '../../../src/domain/error/same-email-error';
 import { requestCreateAccount, requestLoginAccount } from '../../domain/mocks/remote-account';
 import { BdClientSpy } from "../mocks/mock-bd";
+import { EncryptSpy } from '../mocks/mock-encrypt';
 import { TokenSpy } from '../mocks/mock-token';
 
 type Props = {
     sut: RemoteAccount;
     bdClietnSpy: BdClientSpy;
     tokenSpy: TokenSpy;
+    cryptSpy: EncryptSpy;
 }
 
 const makeSut = (): Props => {
     const bdClietnSpy = new BdClientSpy();
     const tokenSpy = new TokenSpy();
-    const sut = new RemoteAccount(bdClietnSpy, tokenSpy);
+    const cryptSpy = new EncryptSpy();
+
+    const sut = new RemoteAccount(bdClietnSpy, tokenSpy, cryptSpy);
 
     return {
         sut,
         bdClietnSpy,
-        tokenSpy
+        tokenSpy,
+        cryptSpy
     }
 }
 
 describe('RemoteAccount', () => {
     it('Should correct params', async () => {
-        const { sut, bdClietnSpy } = makeSut();
+        const { sut, bdClietnSpy, cryptSpy } = makeSut();
 
         const request = requestCreateAccount();
 
         await sut.createAccount(request);
 
-        expect(bdClietnSpy.body).toEqual(request);
+        expect(cryptSpy.decrypt(bdClietnSpy.body.email)).toBe(request.email);
+        expect(cryptSpy.decrypt(bdClietnSpy.body.password)).toBe(request.password);
+        expect(bdClietnSpy.body.username).toBe(request.username);
     });
 
     it('Should throw erros with equal email', async () => {
