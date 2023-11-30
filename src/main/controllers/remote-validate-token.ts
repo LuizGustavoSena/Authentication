@@ -16,6 +16,9 @@ export const validateToken = async (req: FastifyRequest, rep: FastifyReply) => {
         rep.statusCode = error instanceof InvalidCredentialsError ?
             401 : 500;
 
-        rep.send(error.message);
+        const msg = error instanceof InvalidCredentialsError ?
+            error.message : 'Erro inesperado';
+
+        rep.send(msg);
     }
 }
