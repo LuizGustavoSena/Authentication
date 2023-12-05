@@ -5,8 +5,6 @@
   "license": "MIT",
   "scripts": {
     "start": "tsx src/server.ts",
-    "start:prd": "node dist/server.js",
-    "build": "tsup src",
     "test": "vitest"
   },
   "dependencies": {
@@ -15,8 +13,7 @@
     "dotenv": "16.3.1",
     "fastify": "4.24.3",
     "jwt-simple": "0.5.6",
-    "prisma": "5.5.2",
-    "tsup": "7.2.0"
+    "prisma": "5.5.2"
   },
   "devDependencies": {
     "@faker-js/faker": "8.2.0",
