@@ -1,3 +1,4 @@
+require('dotenv/config');
 import Fastify from 'fastify';
 import * as AccountControler from './main/controllers/remote-account';
 import * as ValidateControler from './main/controllers/remote-validate-token';
@@ -12,7 +13,7 @@ fastify.post('/login_account', AccountControler.loginAccount);
 
 fastify.get('/validate_token', ValidateControler.validateToken);
 
-fastify.listen({ port: 3000 }, function (err, address) {
+fastify.listen({ port: Number(process.env.PORT) || 3000 }, function (err, address) {
     if (err) {
         fastify.log.error(err)
         process.exit(1)
