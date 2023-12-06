@@ -26,6 +26,9 @@ export const createAccount = async (req: FastifyRequest, rep: FastifyReply) => {
         const msg = error instanceof SameEmailError ?
             error.message : 'Erro inesperado';
 
+        if (!(error instanceof SameEmailError))
+            req.log.info(error.message);
+
         rep.send(msg);
     }
 }
@@ -47,6 +50,9 @@ export const loginAccount = async (req: FastifyRequest, rep: FastifyReply) => {
 
         const msg = error instanceof InvalidCredentialsError ?
             error.message : 'Erro inesperado';
+
+        if (!(error instanceof InvalidCredentialsError))
+            req.log.info(error.message);
 
         rep.send(msg);
     }
