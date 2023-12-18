@@ -11,7 +11,6 @@ const fastify = Fastify({
 
 fastify.register(cors, {
     origin: (origin, cb) => {
-        console.log(new URL(origin).hostname + ' === ' + process.env.URL_WEB_SITE);
         if (new URL(origin).hostname === process.env.URL_WEB_SITE) {
             cb(null, true);
             return;
