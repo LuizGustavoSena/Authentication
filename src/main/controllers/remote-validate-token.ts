@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
 import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
 import { makeRemoteValidateToken } from "../factories/use-cases/remote-validate-token";
 
