@@ -4,6 +4,8 @@
     "strictPropertyInitialization": false,
     "target": "es2020",
     "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "allowJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
