@@ -4,7 +4,7 @@
 <img height="400" src="assets/authentication.png" />
 </div>
 </br>
-It's a simple API for create users and authenticate them.
+It's a simple API for create users and authenticate them with JWT.
 
 ## Table of Contents
 
@@ -19,7 +19,6 @@ It's a simple API for create users and authenticate them.
 
 ## Stack
 <div style="display: inline_block">
-<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" />
     <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
     <img height="40" width="50" src="https://raw.githubusercontent.com/fastify/graphics/refs/heads/master/fastify-1000px-square-01.png" />
