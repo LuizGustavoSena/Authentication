@@ -4,7 +4,7 @@ export interface Token {
 }
 
 export type RequestToken = {
-    email: string;
+    userId: string;
 }
 
 export type ResponseToken = {
@@ -12,7 +12,7 @@ export type ResponseToken = {
 }
 
 export type ResponseValidate = {
-    email: string,
-    issued: number,
-    expires: number
+    userId: string;
+    issued: number;
+    expires: number;
 }

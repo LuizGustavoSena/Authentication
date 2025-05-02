@@ -22,23 +22,13 @@ const validateLoginAccount = z.object({
 });
 
 export const createAccount = async (req: FastifyRequest, rep: FastifyReply) => {
-    const { username, email, password } = req.body as RequestCreateAccount;
-
     try {
-        validateCreateAccount.parse({
-            username,
-            email,
-            password
-        });
+        validateCreateAccount.parse(req.body);
 
-        await remoteAccount.createAccount({
-            username,
-            email,
-            password
-        });
+        const response = await remoteAccount.createAccount(req.body as RequestCreateAccount);
 
         rep.statusCode = 201;
-        rep.send();
+        rep.send(response);
     } catch (error: any) {
         let code = 500;
         let message = 'Erro inesperado';
@@ -57,18 +47,10 @@ export const createAccount = async (req: FastifyRequest, rep: FastifyReply) => {
 }
 
 export const loginAccount = async (req: FastifyRequest, rep: FastifyReply) => {
-    const { email, password } = req.body as RequestLoginAccount;
-
     try {
-        validateLoginAccount.parse({
-            email,
-            password
-        });
+        validateLoginAccount.parse(req.body);
 
-        const token = await remoteAccount.loginAccount({
-            email,
-            password
-        });
+        const token = await remoteAccount.loginAccount(req.body as RequestLoginAccount);
 
         rep.statusCode = 201;
         rep.send(token);
