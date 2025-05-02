@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsx src/server.ts",
+    "dev": "tsx src/server.ts",
     "build": "tsc",
-    "start:prod": "node dist/server.js",
+    "start": "node dist/server.js",
     "test": "vitest"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "fastify": "4.24.3",
     "jwt-simple": "0.5.6",
     "prisma": "5.5.2",
+    "uuid": "11.1.0",
     "zod": "3.22.4"
   },
   "devDependencies": {
