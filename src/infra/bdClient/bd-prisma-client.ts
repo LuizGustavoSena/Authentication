@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../data/protocols/bd";
-import { User } from "../../domain/models";
+import { User, UserResponse } from "../../domain/models";
 
 export class BdPrismaClient implements BdClient {
     prisma: PrismaClient;
@@ -10,29 +10,23 @@ export class BdPrismaClient implements BdClient {
     }
 
     async createUser(params: User): Promise<ResponseCreateUser> {
-        const { email, password, username } = params;
-
         const createUser = await this.prisma.users.create({
-            data: {
-                email,
-                password,
-                username
-            }
+            data: params
         });
+
+        delete createUser.password;
 
         return createUser;
     }
 
-    async haveUser(params: RequestHaveUser): Promise<boolean> {
-        const { email, password } = params;
-
+    async getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse> {
         const results = await this.prisma.users.findFirst({
-            where: {
-                email,
-                password
-            }
+            where: params
         });
 
-        return !!results;
+        if (results && results.password)
+            delete results.password;
+
+        return results;
     }
 }
