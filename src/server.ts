@@ -32,10 +32,11 @@ fastify.get('/', (_, rep) => {
     rep.send();
 });
 
-setInterval(() => {
-    if (process.env.ENVIRONMENT === 'production')
+if (process.env.ENVIRONMENT === 'production') {
+    setInterval(() => {
         https.get(process.env.URL_API_AUTHENTICATION);
-}, Number(process.env.MINUTES_REQUEST) * 60 * 1000);
+    }, Number(process.env.MINUTES_REQUEST) * 60 * 1000);
+}
 
 fastify.listen({
     port: Number(process.env.PORT) || 3000,
