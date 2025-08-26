@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../data/protocols/bd";
-import { User, UserResponse } from "../../domain/models";
+import { PatchRefreshToken, User, UserResponse } from "../../domain/models";
 
 export class BdPrismaClient implements BdClient {
     prisma: PrismaClient;
@@ -28,5 +28,9 @@ export class BdPrismaClient implements BdClient {
             delete results.password;
 
         return results;
+    }
+
+    async patchRefreshTokenById(params: PatchRefreshToken): Promise<void> {
+
     }
 }
