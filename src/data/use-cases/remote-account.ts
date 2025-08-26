@@ -42,8 +42,15 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
         if (!haveUser)
             throw new InvalidCredentialsError();
 
-        return this.token.generate({
+        const refreshToken = this.guid.generate();
+
+        const { token } = this.token.generate({
             userId: haveUser.id
         });
+
+        return {
+            token,
+            refreshToken
+        }
     };
 }
