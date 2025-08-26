@@ -5,4 +5,5 @@ export type RequestLoginAccount = {
 
 export type ResponseLoginAccount = {
     token: string;
+    refreshToken: string;
 }
