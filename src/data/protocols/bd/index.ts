@@ -3,7 +3,7 @@ import { PatchRefreshToken, User, UserResponse } from "../../../domain/models";
 export interface BdClient {
     createUser(params: User): Promise<ResponseCreateUser>;
     getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse>;
-    patchRefreshTokenById(params: PatchRefreshToken): Promise<void>;
+    patchRefreshToken(params: PatchRefreshToken): Promise<void>;
 };
 
 export type RequestHaveUser = {

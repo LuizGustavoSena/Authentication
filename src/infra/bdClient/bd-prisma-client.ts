@@ -30,7 +30,12 @@ export class BdPrismaClient implements BdClient {
         return results;
     }
 
-    async patchRefreshTokenById(params: PatchRefreshToken): Promise<void> {
-
+    async patchRefreshToken(params: PatchRefreshToken): Promise<void> {
+        await this.prisma.users.update({
+            where: { id: params.id },
+            data: {
+                refresh_token: params.refreshToken
+            }
+        });
     }
 }
