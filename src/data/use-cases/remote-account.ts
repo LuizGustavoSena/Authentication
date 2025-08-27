@@ -44,6 +44,8 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
 
         const refreshToken = this.guid.generate();
 
+        await this.bdClient.patchRefreshToken({ id: haveUser.id, refreshToken });
+
         const { token } = this.token.generate({
             userId: haveUser.id
         });
