@@ -2,6 +2,7 @@ import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-
 import { SameEmailError } from "../../domain/error/same-email-error";
 import { RequestLoginAccount, ResponseLoginAccount } from "../../domain/models";
 import { CreateAccount, LoginAccount, RequestCreateAccount, ResponseCreateAccount } from "../../domain/use-cases";
+import { RefreshToken } from "../../domain/use-cases/refresh-token";
 import { BdClient } from "../protocols/bd";
 import { Encrypt } from "../protocols/encrypt";
 import { GuidClient } from "../protocols/guid";
@@ -12,7 +13,8 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
         private bdClient: BdClient,
         private token: Token,
         private crypt: Encrypt,
-        private guid: GuidClient
+        private guid: GuidClient,
+        private refreshToken: RefreshToken,
     ) { };
 
     async createAccount(params: RequestCreateAccount): Promise<ResponseCreateAccount> {
@@ -42,9 +44,7 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
         if (!haveUser)
             throw new InvalidCredentialsError();
 
-        const refreshToken = this.guid.generate();
-
-        await this.bdClient.patchRefreshToken({ id: haveUser.id, refreshToken });
+        const { refreshToken } = await this.refreshToken.getRefreshTokenByUserId(haveUser.id);
 
         const { token } = this.token.generate({
             userId: haveUser.id
