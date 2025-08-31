@@ -8,6 +8,12 @@ export type User = {
 export type UserResponse = Omit<User, 'password'>;
 
 export type PatchRefreshToken = {
-    id: string;
+    userId: string;
     refreshToken: string;
 }
+
+export type GetRefreshTokenResponse = {
+    refreshToken: string;
+}
+
+export type UpdateRefreshTokenResponse = GetRefreshTokenResponse & { token: string };
