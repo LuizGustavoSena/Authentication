@@ -10,6 +10,7 @@ export type RequestHaveUser = {
     email: string;
     password?: string;
     userId: string;
+    refresh_token?: string;
 }
 
 export type ResponseCreateUser = {
