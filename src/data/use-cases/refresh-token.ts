@@ -1,13 +1,16 @@
-import { GetRefreshTokenResponse } from "../../domain/models";
+import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
+import { GetRefreshTokenResponse, UpdateRefreshTokenResponse } from "../../domain/models";
 import { RefreshToken } from "../../domain/use-cases/refresh-token";
 import { BdClient } from "../protocols/bd";
 import { GuidClient } from "../protocols/guid";
+import { Token } from "../protocols/token";
 
 export class RefreshTokenUseCase implements RefreshToken {
     constructor(
         private guid: GuidClient,
         private bdClient: BdClient,
-
+        private refreshToken: RefreshToken,
+        private token: Token,
     ) { };
 
     async getRefreshTokenByUserId(userId: string): Promise<GetRefreshTokenResponse> {
@@ -20,7 +23,21 @@ export class RefreshTokenUseCase implements RefreshToken {
         }
     }
 
-    async updateRefreshTokenByRefreshToken(refreshToken: string): Promise<GetRefreshTokenResponse> {
-        throw new Error("Method not implemented.");
+    async updateRefreshTokenByRefreshToken(refresh_token: string): Promise<UpdateRefreshTokenResponse> {
+        const user = await this.bdClient.getUserByFilter({ refresh_token });
+
+        if (!user)
+            throw new InvalidCredentialsError();
+
+        const { refreshToken } = await this.refreshToken.getRefreshTokenByUserId(user.id);
+
+        const { token } = this.token.generate({
+            userId: user.id
+        });
+
+        return {
+            refreshToken,
+            token
+        };
     }
 }
