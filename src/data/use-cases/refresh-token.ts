@@ -9,7 +9,6 @@ export class RefreshTokenUseCase implements RefreshToken {
     constructor(
         private guid: GuidClient,
         private bdClient: BdClient,
-        private refreshToken: RefreshToken,
         private token: Token,
     ) { };
 
@@ -29,7 +28,7 @@ export class RefreshTokenUseCase implements RefreshToken {
         if (!user)
             throw new InvalidCredentialsError();
 
-        const { refreshToken } = await this.refreshToken.getRefreshTokenByUserId(user.id);
+        const { refreshToken } = await this.getRefreshTokenByUserId(user.id);
 
         const { token } = this.token.generate({
             userId: user.id
