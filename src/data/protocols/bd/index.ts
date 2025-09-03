@@ -1,7 +1,8 @@
-import { PatchRefreshToken, User, UserResponse } from "../../../domain/models";
+import { PatchRefreshToken, UserResponse } from "../../../domain/models";
+import { RequestCreateAccount } from "../../../domain/use-cases";
 
 export interface BdClient {
-    createUser(params: User): Promise<ResponseCreateUser>;
+    createUser(params: RequestCreateAccount): Promise<ResponseCreateUser>;
     getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse>;
     patchRefreshToken(params: PatchRefreshToken): Promise<void>;
 };

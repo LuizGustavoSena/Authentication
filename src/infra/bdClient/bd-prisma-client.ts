@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../data/protocols/bd";
-import { PatchRefreshToken, User, UserResponse } from "../../domain/models";
+import { PatchRefreshToken, UserResponse } from "../../domain/models";
+import { RequestCreateAccount } from "../../domain/use-cases";
 
 export class BdPrismaClient implements BdClient {
     prisma: PrismaClient;
@@ -9,7 +10,7 @@ export class BdPrismaClient implements BdClient {
         this.prisma = new PrismaClient();
     }
 
-    async createUser(params: User): Promise<ResponseCreateUser> {
+    async createUser(params: RequestCreateAccount): Promise<ResponseCreateUser> {
         const createUser = await this.prisma.users.create({
             data: params
         });
