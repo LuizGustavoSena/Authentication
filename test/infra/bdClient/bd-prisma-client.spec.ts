@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, it, vi } from "vitest";
-import { User } from "../../../src/domain/models";
 import { BdPrismaClient } from "../../../src/infra/bdClient/bd-prisma-client";
 import { requestCreateAccount } from "../../domain/mocks/remote-account";
 
@@ -22,11 +21,11 @@ describe('BbPrismaClient', () => {
     it('Should create user', async () => {
         const { sut } = makeSut();
 
-        const request: User = requestCreateAccount();
+        const request = requestCreateAccount();
 
         const user = await sut.createUser(request);
 
-        const haveUser = await sut.haveUser({
+        const haveUser = await sut.getUserByFilter({
             email: request.email,
             password: request.password
         });
@@ -42,7 +41,7 @@ describe('BbPrismaClient', () => {
 
         const response = await sut.createUser(request);
 
-        const haveUser = await sut.haveUser({ email: request.email });
+        const haveUser = await sut.getUserByFilter({ email: request.email });
 
         expect(response.id).not.null.undefined;
         expect(haveUser).true;
@@ -51,7 +50,7 @@ describe('BbPrismaClient', () => {
     it('Should nonexisting user by email', async () => {
         const { sut } = makeSut();
 
-        const haveUser = await sut.haveUser({ email: faker.internet.email() });
+        const haveUser = await sut.getUserByFilter({ email: faker.internet.email() });
 
         expect(haveUser).false;
     });
@@ -59,7 +58,7 @@ describe('BbPrismaClient', () => {
     it('Should nonexisting user by email and password', async () => {
         const { sut } = makeSut();
 
-        const haveUser = await sut.haveUser({
+        const haveUser = await sut.getUserByFilter({
             email: faker.internet.email(),
             password: faker.word.words()
         });
