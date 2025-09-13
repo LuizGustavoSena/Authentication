@@ -65,4 +65,15 @@ describe('BbPrismaClient', () => {
 
         expect(haveUser).false;
     });
+
+    it('Should be successful refresh token by patchRefreshToken', async () => {
+        const { sut } = makeSut();
+
+        const promise = sut.patchRefreshToken({
+            userId: faker.string.uuid(),
+            refreshToken: faker.string.uuid()
+        });
+
+        await expect(promise).resolves.toBeUndefined();
+    });
 });
