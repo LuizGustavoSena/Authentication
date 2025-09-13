@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../../src/data/protocols/bd";
-import { User } from "../../../src/domain/models";
+import { InvalidCredentialsError } from "../../../src/domain/error/invalid-credentials-error";
+import { PatchRefreshToken, User, UserResponse } from "../../../src/domain/models";
 
 export class BdClientSpy implements BdClient {
     users: User[] = [];
@@ -21,23 +22,31 @@ export class BdClientSpy implements BdClient {
         }
     }
 
-    async haveUser(params: RequestHaveUser): Promise<boolean> {
+    async getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse> {
         this.body = params;
 
         if (this.users.length === 0)
-            return false;
+            return null;
 
-        const haveModel = this.users.find(el => {
-            if (params.password)
-                return el.email === params.email && el.password === params.password;
-
-            return el.email === params.email;
-        });
+        const haveModel = this.users.find(user =>
+            Object.entries(params).every(([key, value]) => user[key as keyof User] === value)
+        );
 
         if (!haveModel)
-            return false;
+            return null;
 
-        return true;
+        return haveModel;
+    }
+
+    async patchRefreshToken(params: PatchRefreshToken): Promise<void> {
+        this.body = params;
+
+        if (this.users.length === 0)
+            throw new InvalidCredentialsError();
+
+        const user = await this.getUserByFilter({ userId: params.userId });
+
+        user.refreshToken = params.refreshToken;
     }
 
 }
