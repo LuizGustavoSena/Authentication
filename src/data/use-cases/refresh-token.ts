@@ -23,7 +23,7 @@ export class RefreshTokenUseCase implements RefreshToken {
     }
 
     async updateRefreshTokenByRefreshToken(refresh_token: string): Promise<UpdateRefreshTokenResponse> {
-        const user = await this.bdClient.getUserByFilter({ refresh_token });
+        const user = await this.bdClient.getUserByFilter({ refreshToken: refresh_token });
 
         if (!user)
             throw new InvalidCredentialsError();
