@@ -1,11 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
+import { RefreshTokenUseCase } from '../../../src/data/use-cases/refresh-token';
 import { RemoteAccount } from "../../../src/data/use-cases/remote-account";
 import { InvalidCredentialsError } from '../../../src/domain/error/invalid-credentials-error';
 import { SameEmailError } from '../../../src/domain/error/same-email-error';
 import { requestCreateAccount, requestLoginAccount } from '../../domain/mocks/remote-account';
 import { BdClientSpy } from "../mocks/mock-bd";
 import { EncryptSpy } from '../mocks/mock-encrypt';
+import { GuidSpy } from '../mocks/mock-guid';
 import { TokenSpy } from '../mocks/mock-token';
 
 type Props = {
@@ -13,20 +15,24 @@ type Props = {
     bdClietnSpy: BdClientSpy;
     tokenSpy: TokenSpy;
     cryptSpy: EncryptSpy;
+    refreshToken: RefreshTokenUseCase;
 }
 
 const makeSut = (): Props => {
     const bdClietnSpy = new BdClientSpy();
     const tokenSpy = new TokenSpy();
     const cryptSpy = new EncryptSpy();
+    const guidSpy = new GuidSpy();
 
-    const sut = new RemoteAccount(bdClietnSpy, tokenSpy, cryptSpy);
+    const refreshToken = new RefreshTokenUseCase(guidSpy, bdClietnSpy, tokenSpy);
+    const sut = new RemoteAccount(bdClietnSpy, tokenSpy, cryptSpy, guidSpy, refreshToken);
 
     return {
         sut,
         bdClietnSpy,
         tokenSpy,
-        cryptSpy
+        cryptSpy,
+        refreshToken
     }
 }
 
