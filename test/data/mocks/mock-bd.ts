@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../../src/data/protocols/bd";
-import { InvalidCredentialsError } from "../../../src/domain/error/invalid-credentials-error";
 import { PatchRefreshToken, User, UserResponse } from "../../../src/domain/models";
 
 export class BdClientSpy implements BdClient {
@@ -40,13 +39,5 @@ export class BdClientSpy implements BdClient {
 
     async patchRefreshToken(params: PatchRefreshToken): Promise<void> {
         this.body = params;
-
-        if (this.users.length === 0)
-            throw new InvalidCredentialsError();
-
-        const user = await this.getUserByFilter({ userId: params.userId });
-
-        user.refreshToken = params.refreshToken;
     }
-
 }
