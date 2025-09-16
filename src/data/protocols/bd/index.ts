@@ -11,7 +11,7 @@ export type RequestHaveUser = {
     email: string;
     password?: string;
     userId: string;
-    refresh_token?: string;
+    refreshToken?: string;
 }
 
 export type ResponseCreateUser = {
