@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../../src/data/protocols/bd";
 import { PatchRefreshToken, User, UserResponse } from "../../../src/domain/models";
 
@@ -15,10 +14,7 @@ export class BdClientSpy implements BdClient {
 
         this.users.push(params);
 
-        return {
-            id: faker.word.words(),
-            ...params
-        }
+        return params;
     }
 
     async getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse> {
