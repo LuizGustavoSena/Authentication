@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 import { RefreshTokenUseCase } from "../../../src/data/use-cases/refresh-token";
+import { InvalidCredentialsError } from '../../../src/domain/error/invalid-credentials-error';
 import { createUser } from '../../domain/mocks/user';
 import { BdClientSpy } from "../mocks/mock-bd";
 import { GuidSpy } from "../mocks/mock-guid";
@@ -60,5 +61,13 @@ describe('RefreshTokenUseCase', () => {
         expect(bdClietnSpy.body.refreshToken).toBe(newRefreshToken);
         expect(tokenSpy.token).toBe(`${userId}token`);
         expect(response.refreshToken).toBe(newRefreshToken);
+    });
+
+    it('Should be error update refresh token without user', async () => {
+        const { sut } = makeSut();
+
+        const promise = sut.updateRefreshTokenByRefreshToken(faker.string.uuid());
+
+        await expect(promise).rejects.toThrow(new InvalidCredentialsError());
     });
 });
