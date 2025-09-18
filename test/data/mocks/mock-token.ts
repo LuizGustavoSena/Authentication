@@ -4,7 +4,7 @@ export class TokenSpy implements Token {
     token: string;
 
     generate(params: RequestToken): ResponseToken {
-        this.token = `${params.email}token`;
+        this.token = `${params.userId}token`;
 
         return {
             token: this.token
@@ -18,7 +18,7 @@ export class TokenSpy implements Token {
         const date = new Date().getTime();
 
         return {
-            email: this.token.replace('token', ''),
+            userId: this.token.replace('token', ''),
             issued: date,
             expires: date + Number(process.env.EXPIRES_TOKEN_MILLISECONDS)
         }
