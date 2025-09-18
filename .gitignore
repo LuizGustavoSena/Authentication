@@ -6,3 +6,4 @@ dist
 # archives
 yarn.lock
 .env
+tmp/*
