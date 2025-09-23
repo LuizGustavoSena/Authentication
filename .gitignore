@@ -6,4 +6,4 @@ dist
 # archives
 yarn.lock
 .env
-db/app.bd
+db/app.db
