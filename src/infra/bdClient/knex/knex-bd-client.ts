@@ -25,7 +25,6 @@ export class KnexBdClient implements BdClient {
 
             return response[0];
         } catch (error) {
-            console.log({ error })
             throw new DatabaseError();
         }
     }
