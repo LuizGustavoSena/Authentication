@@ -1,10 +1,16 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { knex } from '../../../src/infra/bdClient/knex/database';
 import { KnexBdClient } from '../../../src/infra/bdClient/knex/knex-bd-client';
 import { requestCreateAccount } from '../../domain/mocks/remote-account';
 
 const makeSut = () => new KnexBdClient();
 
 describe('BdKnexClient', () => {
+    beforeEach(async () => {
+        await knex.migrate.rollback(undefined, true);
+        await knex.migrate.latest();
+    });
+
     it('should be successful create a new user', async () => {
         const sut = makeSut();
 
