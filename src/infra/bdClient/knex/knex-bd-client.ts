@@ -21,7 +21,7 @@ export class KnexBdClient implements BdClient {
 
     async getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse> {
         try {
-            const response = await this.repository.where(params).select(['id', 'username', 'email', 'refreshToken']);
+            const response = await this.repository('users').where(params).select(['id', 'username', 'email', 'refresh_token']);
 
             return response[0];
         } catch (error) {
