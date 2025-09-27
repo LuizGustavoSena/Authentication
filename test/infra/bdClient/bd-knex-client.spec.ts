@@ -17,4 +17,22 @@ describe('BdKnexClient', () => {
         expect(test.email).toBe(request.email);
         expect(test.username).toBe(request.username);
     });
+
+    it('should be successful get user by email and password', async () => {
+        const sut = makeSut();
+
+        const request = requestCreateAccount();
+
+        await sut.createUser(request);
+
+        const response = await sut.getUserByFilter({
+            email: request.email,
+            password: request.password
+        });
+
+        expect(response).not.toHaveProperty('password');
+        expect(response.id).toBe(request.id);
+        expect(response.email).toBe(request.email);
+        expect(response.username).toBe(request.username);
+    });
 });
