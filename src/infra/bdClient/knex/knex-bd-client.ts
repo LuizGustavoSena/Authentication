@@ -20,7 +20,14 @@ export class KnexBdClient implements BdClient {
     }
 
     async getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse> {
-        throw new Error("Method not implemented.");
+        try {
+            const response = await this.repository.where(params).select(['id', 'username', 'email', 'refreshToken']);
+
+            return response[0];
+        } catch (error) {
+            console.log({ error })
+            throw new DatabaseError();
+        }
     }
 
     async patchRefreshToken(params: PatchRefreshToken): Promise<void> {
