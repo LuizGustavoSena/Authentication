@@ -3,18 +3,18 @@ export type User = {
     username: string;
     email: string;
     password: string;
-    refreshToken?: string;
+    refreshtoken?: string;
 }
 
 export type UserResponse = Omit<User, 'password'>;
 
 export type PatchRefreshToken = {
     userId: string;
-    refreshToken: string;
+    refreshtoken: string;
 }
 
 export type GetRefreshTokenResponse = {
-    refreshToken: string;
+    refreshtoken: string;
 }
 
 export type UpdateRefreshTokenResponse = GetRefreshTokenResponse & { token: string };

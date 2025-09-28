@@ -10,8 +10,8 @@ export interface BdClient {
 export type RequestHaveUser = {
     email: string;
     password?: string;
-    userId: string;
-    refreshToken?: string;
+    id: string;
+    refreshtoken?: string;
 }
 
 export type ResponseCreateUser = {
