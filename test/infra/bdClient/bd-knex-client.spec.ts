@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { knex } from '../../../src/infra/bdClient/knex/database';
 import { KnexBdClient } from '../../../src/infra/bdClient/knex/knex-bd-client';
@@ -40,5 +41,23 @@ describe('BdKnexClient', () => {
         expect(response.id).toBe(request.id);
         expect(response.email).toBe(request.email);
         expect(response.username).toBe(request.username);
+    });
+
+    it('should be successful update refresh token', async () => {
+        const sut = makeSut();
+
+        const request = requestCreateAccount();
+        const refreshtoken = faker.string.uuid();
+
+        await sut.createUser(request);
+
+        await sut.patchRefreshToken({
+            userId: request.id,
+            refreshtoken
+        });
+
+        const response = await sut.getUserByFilter({ id: request.id });
+
+        expect(response.refreshtoken).toBe(refreshtoken);
     });
 });
