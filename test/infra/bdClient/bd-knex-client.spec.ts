@@ -60,4 +60,25 @@ describe('BdKnexClient', () => {
 
         expect(response.refreshtoken).toBe(refreshtoken);
     });
+
+    it('should be successful get user by refresh token', async () => {
+        const sut = makeSut();
+
+        const request = requestCreateAccount();
+        const refreshtoken = faker.string.uuid();
+
+        await sut.createUser(request);
+
+        await sut.patchRefreshToken({
+            userId: request.id,
+            refreshtoken
+        });
+
+        const response = await sut.getUserByFilter({ refreshtoken });
+
+        expect(response.id).toBe(request.id);
+        expect(response.email).toBe(request.email);
+        expect(response.username).toBe(request.username);
+        expect(response.refreshtoken).toBe(refreshtoken);
+    });
 });
