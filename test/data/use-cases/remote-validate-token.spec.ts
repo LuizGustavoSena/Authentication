@@ -24,13 +24,13 @@ describe('RemoteValidateToken', () => {
     it('Should correct token', () => {
         const { sut, tokenSpy } = makeSut();
 
-        const email = faker.internet.email();
+        const userId = faker.string.uuid();
 
-        tokenSpy.token = `${email}token`;
+        tokenSpy.token = `${userId}token`;
 
-        const response = sut.validate(email);
+        const response = sut.validate(userId);
 
-        expect(response.email).toBe(email);
+        expect(response.userId).toBe(userId);
         expect(response.expires).toBe(response.issued + Number(process.env.EXPIRES_TOKEN_MILLISECONDS));
     });
 
