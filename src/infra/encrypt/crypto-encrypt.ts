@@ -1,17 +1,18 @@
-require('dotenv/config');
+
 import crypto from 'crypto';
 import { Encrypt } from "../../data/protocols/encrypt";
+import { env } from '../zod/env';
 
 export class CryptoEncrypt implements Encrypt {
     key = crypto
         .createHash('sha512')
-        .update(process.env.SECRET_KEY_ENCRYPT)
+        .update(env.SECRET_KEY_ENCRYPT)
         .digest('hex')
         .substring(0, 32);
 
     encryptionIV = crypto
         .createHash('sha512')
-        .update(process.env.SECRET_IV_ENCRYPT)
+        .update(env.SECRET_IV_ENCRYPT)
         .digest('hex')
         .substring(0, 16)
 
