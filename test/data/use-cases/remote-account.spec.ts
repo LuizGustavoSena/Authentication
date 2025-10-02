@@ -66,7 +66,7 @@ describe('RemoteAccount', () => {
         expect(bdClietnSpy.users.length).toBe(1);
     });
 
-    it('Should token with correct authentication', async () => {
+    it('Should be successfull get token with correct authentication', async () => {
         const { sut, tokenSpy } = makeSut();
 
         const createRequest = requestCreateAccount();
@@ -79,7 +79,7 @@ describe('RemoteAccount', () => {
 
         const response = await sut.loginAccount(loginRequest);
 
-        expect(tokenSpy.token).toBe(`${createRequest.email}token`);
+        expect(tokenSpy.token).toBe(`${createRequest.id}token`);
         expect(response.token).toBe(tokenSpy.token);
     });
 
