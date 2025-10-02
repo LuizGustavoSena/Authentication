@@ -26,7 +26,7 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
             throw new SameEmailError();
 
         const user = await this.bdClient.createUser({
-            id: this.guid.generate(),
+            id: params.id,
             email,
             password: this.crypt.encrypt(params.password),
             username: params.username
@@ -44,7 +44,7 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
         if (!haveUser)
             throw new InvalidCredentialsError();
 
-        const { refreshToken } = await this.refreshToken.getRefreshTokenByUserId(haveUser.id);
+        const { refreshtoken } = await this.refreshToken.getRefreshTokenByUserId(haveUser.id);
 
         const { token } = this.token.generate({
             userId: haveUser.id
@@ -52,7 +52,7 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
 
         return {
             token,
-            refreshToken
+            refreshtoken
         }
     };
 }
