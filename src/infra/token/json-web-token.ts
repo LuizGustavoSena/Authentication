@@ -1,10 +1,11 @@
 require('dotenv/config');
 import { decode, encode } from "jwt-simple";
 import { RequestToken, ResponseToken, ResponseValidate, Token } from "../../data/protocols/token";
+import { env } from "../zod/env";
 
 export class JsonWebToken implements Token {
-    expirationInMilliseconds = Number(process.env.EXPIRES_TOKEN_MILLISECONDS);
-    secretKey = String(process.env.SECRET_KEY_TOKEN);
+    expirationInMilliseconds = Number(env.EXPIRES_TOKEN_MILLISECONDS);
+    secretKey = String(env.SECRET_KEY_TOKEN);
 
     generate(params: RequestToken): ResponseToken {
         const issued = Date.now();
