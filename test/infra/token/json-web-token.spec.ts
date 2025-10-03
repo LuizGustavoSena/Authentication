@@ -5,7 +5,7 @@ import { JsonWebToken } from "../../../src/infra/token/json-web-token";
 type Props = {
     sut: JsonWebToken;
 }
-const makeSut = () => {
+const makeSut = (): Props => {
     const sut = new JsonWebToken();
 
     return {
@@ -17,21 +17,21 @@ describe('JsonWebToken', () => {
     it('Should correct token', () => {
         const { sut } = makeSut();
 
-        const email = faker.internet.email();
+        const userId = faker.string.uuid();
 
-        const response = sut.generate({ email });
+        const response = sut.generate({ userId });
 
         const validToken = sut.validate(response.token);
 
-        expect(response.token).toString();
-        expect(validToken.email).toBe(email);
+        expect(response.token).toBeTypeOf('string');
+        expect(validToken.userId).toBe(userId);
     });
 
     it('Should correct token with validate method', () => {
         const { sut } = makeSut();
 
         const response = sut.generate({
-            email: faker.internet.email()
+            userId: faker.string.uuid()
         });
 
         const validatedToken = sut.validate(response.token);
@@ -52,10 +52,10 @@ describe('JsonWebToken', () => {
     it('Should invalid token expirated', () => {
         const { sut } = makeSut();
 
-        sut.expirationInMilliseconds = - 10;
+        sut.expirationInMilliseconds = -10;
 
         const response = sut.generate({
-            email: faker.internet.email()
+            userId: faker.string.uuid()
         });
 
         const validatedToken = sut.validate(response.token);
