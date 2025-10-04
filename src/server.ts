@@ -2,6 +2,7 @@ require('dotenv/config');
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import https from 'https';
+import { env } from './infra/zod/env';
 import * as AccountControler from './main/controllers/remote-account';
 import * as ValidateControler from './main/controllers/remote-validate-token';
 
@@ -11,7 +12,7 @@ const fastify = Fastify({
 
 fastify.register(cors, {
     origin: (origin, cb) => {
-        if (process.env.ENVIRONMENT === 'development' || new URL(origin).hostname === process.env.URL_WEB_SITE) {
+        if (env.NODE_ENV === 'development' || new URL(origin).hostname === env.URL_WEB_SITE) {
             cb(null, true);
             return;
         };
@@ -32,14 +33,14 @@ fastify.get('/', (_, rep) => {
     rep.send();
 });
 
-if (process.env.ENVIRONMENT === 'production') {
+if (env.NODE_ENV === 'production') {
     setInterval(() => {
-        https.get(process.env.URL_API_AUTHENTICATION);
-    }, Number(process.env.MINUTES_REQUEST) * 60 * 1000);
+        https.get(env.URL_API_AUTHENTICATION);
+    }, Number(env.MINUTES_REQUEST) * 60 * 1000);
 }
 
 fastify.listen({
-    port: Number(process.env.PORT) || 3000,
+    port: env.PORT || 3000,
     host: '0.0.0.0',
 }, function (err, address) {
     if (err) {
