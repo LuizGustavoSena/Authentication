@@ -1,5 +1,6 @@
 require('dotenv/config');
 import { RequestToken, ResponseToken, ResponseValidate, Token } from "../../../src/data/protocols/token";
+import { env } from "../../../src/infra/zod/env";
 export class TokenSpy implements Token {
     token: string;
 
@@ -20,7 +21,7 @@ export class TokenSpy implements Token {
         return {
             userId: this.token.replace('token', ''),
             issued: date,
-            expires: date + Number(process.env.EXPIRES_TOKEN_MILLISECONDS)
+            expires: date + Number(env.EXPIRES_TOKEN_MILLISECONDS)
         }
     };
 }
