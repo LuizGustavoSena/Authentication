@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { z, ZodError } from "zod";
+import { ValidationError } from "../../domain/error/validation-error";
 import { MIN_PASSWORD_WORDS, RemoteAccountMessageRequired, RemoteAccountValidation } from "../../domain/validations/remote-account-validation";
 
 export default class RemoteAccountValidationZod implements RemoteAccountValidation {
@@ -19,5 +20,15 @@ export default class RemoteAccountValidationZod implements RemoteAccountValidati
     }
     loginAccount(data: object): void | Error {
         throw new Error("Method not implemented.");
+    }
+
+    private throwValidationError(callback: Function) {
+        try {
+            callback();
+        } catch (error: any) {
+            if (!(error instanceof ZodError)) return;
+
+            throw new ValidationError(error.errors.map(el => el.message).join(', '));
+        }
     }
 }
