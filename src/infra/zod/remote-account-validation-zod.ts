@@ -26,7 +26,12 @@ export default class RemoteAccountValidationZod implements RemoteAccountValidati
     }
 
     loginAccount(data: object): void | Error {
-        throw new Error("Method not implemented.");
+        const schema = z.object({
+            email: this.email,
+            password: this.password
+        });
+
+        this.throwValidationError(() => schema.parse(data));
     }
 
     private throwValidationError(callback: Function) {
