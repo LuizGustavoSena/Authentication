@@ -15,7 +15,7 @@ export default class RemoteAccountValidationZod implements RemoteAccountValidati
         required_error: RemoteAccountMessageRequired.PASSWORD
     }).min(MIN_PASSWORD_WORDS);
 
-    createAccount(data: object): void | Error {
+    createAccount(data: any): void | Error {
         const schema = z.object({
             username: this.username,
             email: this.email,
@@ -25,7 +25,7 @@ export default class RemoteAccountValidationZod implements RemoteAccountValidati
         this.throwValidationError(() => schema.parse(data));
     }
 
-    loginAccount(data: object): void | Error {
+    loginAccount(data: any): void | Error {
         const schema = z.object({
             email: this.email,
             password: this.password
