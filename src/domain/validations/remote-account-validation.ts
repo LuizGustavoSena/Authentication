@@ -7,6 +7,6 @@ export enum RemoteAccountMessageRequired {
 export const MIN_PASSWORD_WORDS = 8;
 
 export interface RemoteAccountValidation {
-    createAccount(data: object): void | Error;
-    loginAccount(data: object): void | Error;
+    createAccount(data: any): void | Error;
+    loginAccount(data: any): void | Error;
 }
