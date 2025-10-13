@@ -1,72 +1,64 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError, z } from "zod";
+import { ZodError } from "zod";
 import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
 import { SameEmailError } from "../../domain/error/same-email-error";
 import { RequestLoginAccount } from "../../domain/models";
-import { RequestCreateAccount } from "../../domain/use-cases";
-import { makeRemoteAccount } from "../factories/use-cases/remote-account";
+import { CreateAccount, LoginAccount, RequestCreateAccount } from "../../domain/use-cases";
+import { RemoteAccountValidation } from "../../domain/validations/remote-account-validation";
 
-const remoteAccount = makeRemoteAccount();
+export default class RemoteAccountController {
+    constructor(
+        private validation: RemoteAccountValidation,
+        private remoteAccount: CreateAccount & LoginAccount,
+    ) { };
 
-const minWordsPassword = 8;
+    async createAccount(req: FastifyRequest, rep: FastifyReply) {
+        try {
+            this.validation.createAccount(req.body);
 
-const validateCreateAccount = z.object({
-    username: z.string(),
-    email: z.string().email(),
-    password: z.string().min(minWordsPassword)
-});
+            const response = await this.remoteAccount.createAccount(req.body as RequestCreateAccount);
 
-const validateLoginAccount = z.object({
-    email: z.string().email(),
-    password: z.string().min(minWordsPassword)
-});
+            rep.statusCode = 201;
+            rep.send(response);
+        } catch (error: any) {
+            let code = 500;
+            let message = 'Erro inesperado';
 
-export const createAccount = async (req: FastifyRequest, rep: FastifyReply) => {
-    try {
-        validateCreateAccount.parse(req.body);
+            if (error instanceof SameEmailError || error instanceof ZodError) {
+                code = error instanceof ZodError ? 415 : 400;
+                message = error.message;
+            };
 
-        const response = await remoteAccount.createAccount(req.body as RequestCreateAccount);
+            if (!(error instanceof SameEmailError) && !(error instanceof ZodError))
+                req.log.info(error.message);
 
-        rep.statusCode = 201;
-        rep.send(response);
-    } catch (error: any) {
-        let code = 500;
-        let message = 'Erro inesperado';
-
-        if (error instanceof SameEmailError || error instanceof ZodError) {
-            code = error instanceof ZodError ? 415 : 400;
-            message = error.message;
-        };
-
-        if (!(error instanceof SameEmailError) && !(error instanceof ZodError))
-            req.log.info(error.message);
-
-        rep.statusCode = code;
-        rep.send(message);
+            rep.statusCode = code;
+            rep.send(message);
+        }
     }
-}
 
-export const loginAccount = async (req: FastifyRequest, rep: FastifyReply) => {
-    try {
-        validateLoginAccount.parse(req.body);
+    async loginAccount(req: FastifyRequest, rep: FastifyReply) {
+        try {
+            this.validation.loginAccount(req.body);
 
-        const token = await remoteAccount.loginAccount(req.body as RequestLoginAccount);
+            const token = await this.remoteAccount.loginAccount(req.body as RequestLoginAccount);
 
-        rep.statusCode = 201;
-        rep.send(token);
-    } catch (error: any) {
-        let code = 500;
-        let message = 'Erro inesperado';
+            rep.statusCode = 201;
+            rep.send(token);
+        } catch (error: any) {
+            let code = 500;
+            let message = 'Erro inesperado';
 
-        if (error instanceof InvalidCredentialsError || error instanceof ZodError) {
-            code = error instanceof ZodError ? 415 : 400;
-            message = error.message;
-        };
+            if (error instanceof InvalidCredentialsError || error instanceof ZodError) {
+                code = error instanceof ZodError ? 415 : 400;
+                message = error.message;
+            };
 
-        if (!(error instanceof InvalidCredentialsError) && !(error instanceof ZodError))
-            req.log.info(error.message);
+            if (!(error instanceof InvalidCredentialsError) && !(error instanceof ZodError))
+                req.log.info(error.message);
 
-        rep.statusCode = code;
-        rep.send(message);
+            rep.statusCode = code;
+            rep.send(message);
+        }
     }
 }
