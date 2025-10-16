@@ -1,10 +1,11 @@
-require('dotenv/config');
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import https from 'https';
 import { env } from './infra/zod/env';
-import * as AccountControler from './main/controllers/remote-account';
 import * as ValidateControler from './main/controllers/remote-validate-token';
+import { makeRemoteAccountController } from './main/factories/controllers/remote-account';
+
+const remoteAccountController = makeRemoteAccountController();
 
 const fastify = Fastify({
     logger: true
@@ -21,9 +22,9 @@ fastify.register(cors, {
     }
 });
 
-fastify.post('/create_account', AccountControler.createAccount);
+fastify.post('/create_account', remoteAccountController.createAccount);
 
-fastify.post('/login_account', AccountControler.loginAccount);
+fastify.post('/login_account', remoteAccountController.loginAccount);
 
 fastify.get('/validate_token', ValidateControler.validateToken);
 
