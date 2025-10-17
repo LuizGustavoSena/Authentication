@@ -2,10 +2,11 @@ import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import https from 'https';
 import { env } from './infra/zod/env';
-import * as ValidateControler from './main/controllers/remote-validate-token';
 import { makeRemoteAccountController } from './main/factories/controllers/remote-account';
+import { makeRemoteValidateTokenControler } from './main/factories/controllers/remote-validate-token';
 
 const remoteAccountController = makeRemoteAccountController();
+const remoteValidateTokenController = makeRemoteValidateTokenControler();
 
 const fastify = Fastify({
     logger: true
@@ -26,7 +27,7 @@ fastify.post('/create_account', remoteAccountController.createAccount);
 
 fastify.post('/login_account', remoteAccountController.loginAccount);
 
-fastify.get('/validate_token', ValidateControler.validateToken);
+fastify.get('/validate_token', remoteValidateTokenController.validateToken);
 
 fastify.get('/', (_, rep) => {
     console.log('Ping received');
