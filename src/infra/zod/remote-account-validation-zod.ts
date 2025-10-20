@@ -3,15 +3,15 @@ import { ValidationError } from "../../domain/error/validation-error";
 import { MIN_PASSWORD_WORDS, RemoteAccountMessageRequired, RemoteAccountValidation } from "../../domain/validations/remote-account-validation";
 
 export default class RemoteAccountValidationZod implements RemoteAccountValidation {
-    username = z.string({
+    private username = z.string({
         required_error: RemoteAccountMessageRequired.USERNAME,
     });
 
-    email = z.string({
+    private email = z.string({
         required_error: RemoteAccountMessageRequired.EMAIL
     }).email();
 
-    password = z.string({
+    private password = z.string({
         required_error: RemoteAccountMessageRequired.PASSWORD
     }).min(MIN_PASSWORD_WORDS);
 
