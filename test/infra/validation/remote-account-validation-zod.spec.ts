@@ -26,4 +26,15 @@ describe('RemoteAccountValidationZod', () => {
 
         expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
     });
+
+    it('Should be error when create account with few letters in password', () => {
+        const sut = makeSut();
+
+        const request = {
+            ...requestCreateAccount(),
+            password: faker.internet.password().slice(0, 4)
+        };
+
+        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+    });
 });
