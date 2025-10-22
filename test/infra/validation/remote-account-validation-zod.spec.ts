@@ -57,4 +57,14 @@ describe('RemoteAccountValidationZod', () => {
 
         expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
     });
+
+    it('Should be error when create account without password', () => {
+        const sut = makeSut();
+
+        const request = requestCreateAccount();
+
+        delete request.password;
+
+        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+    });
 });
