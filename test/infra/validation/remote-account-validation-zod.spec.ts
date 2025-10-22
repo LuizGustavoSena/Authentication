@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 import { ValidationError } from '../../../src/domain/error/validation-error';
 import RemoteAccountValidationZod from "../../../src/infra/zod/remote-account-validation-zod";
-import { requestCreateAccount } from '../../domain/mocks/remote-account';
+import { requestCreateAccount, requestLoginAccount } from '../../domain/mocks/remote-account';
 
 export const makeSut = (): RemoteAccountValidationZod =>
     new RemoteAccountValidationZod();
@@ -66,5 +66,13 @@ describe('RemoteAccountValidationZod', () => {
         delete request.password;
 
         expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+    });
+
+    it('Should be successfull login account', () => {
+        const sut = makeSut();
+
+        const request = requestLoginAccount();
+
+        expect(() => sut.loginAccount(request)).resolves.toBeUndefined();
     });
 });
