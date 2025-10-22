@@ -1,4 +1,6 @@
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
+import { ValidationError } from '../../../src/domain/error/validation-error';
 import RemoteAccountValidationZod from "../../../src/infra/zod/remote-account-validation-zod";
 import { requestCreateAccount } from '../../domain/mocks/remote-account';
 
@@ -12,5 +14,16 @@ describe('RemoteAccountValidationZod', () => {
         const request = requestCreateAccount();
 
         expect(() => sut.createAccount(request)).resolves.toBeUndefined();
+    });
+
+    it('Should be error when create account with another email type', () => {
+        const sut = makeSut();
+
+        const request = {
+            ...requestCreateAccount(),
+            email: faker.string.sample()
+        };
+
+        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
     });
 });
