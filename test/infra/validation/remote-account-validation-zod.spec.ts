@@ -75,4 +75,15 @@ describe('RemoteAccountValidationZod', () => {
 
         expect(() => sut.loginAccount(request)).not.toThrow();
     });
+
+    it('Should be error when login account with another email type', () => {
+        const sut = makeSut();
+
+        const request = {
+            ...requestLoginAccount(),
+            email: faker.string.sample()
+        };
+
+        expect(() => sut.loginAccount(request)).toThrow(ValidationError);
+    });
 });
