@@ -13,7 +13,7 @@ describe('RemoteAccountValidationZod', () => {
 
         const request = requestCreateAccount();
 
-        expect(() => sut.createAccount(request)).resolves.toBeUndefined();
+        expect(() => sut.createAccount(request)).not.toThrow();
     });
 
     it('Should be error when create account with another email type', () => {
@@ -24,7 +24,7 @@ describe('RemoteAccountValidationZod', () => {
             email: faker.string.sample()
         };
 
-        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+        expect(() => sut.createAccount(request)).toThrow(ValidationError);
     });
 
     it('Should be error when create account with few letters in password', () => {
@@ -35,7 +35,7 @@ describe('RemoteAccountValidationZod', () => {
             password: faker.internet.password().slice(0, 4)
         };
 
-        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+        expect(() => sut.createAccount(request)).toThrow(ValidationError);
     });
 
     it('Should be error when create account without username', () => {
@@ -45,7 +45,7 @@ describe('RemoteAccountValidationZod', () => {
 
         delete request.username;
 
-        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+        expect(() => sut.createAccount(request)).toThrow(ValidationError);
     });
 
     it('Should be error when create account without email', () => {
@@ -55,7 +55,7 @@ describe('RemoteAccountValidationZod', () => {
 
         delete request.email;
 
-        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+        expect(() => sut.createAccount(request)).toThrow(ValidationError);
     });
 
     it('Should be error when create account without password', () => {
@@ -65,7 +65,7 @@ describe('RemoteAccountValidationZod', () => {
 
         delete request.password;
 
-        expect(() => sut.createAccount(request)).rejects.toBeInstanceOf(ValidationError);
+        expect(() => sut.createAccount(request)).toThrow(ValidationError);
     });
 
     it('Should be successfull login account', () => {
@@ -73,6 +73,6 @@ describe('RemoteAccountValidationZod', () => {
 
         const request = requestLoginAccount();
 
-        expect(() => sut.loginAccount(request)).resolves.toBeUndefined();
+        expect(() => sut.loginAccount(request)).not.toThrow();
     });
 });
