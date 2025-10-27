@@ -6,7 +6,7 @@ export const requestCreateAccount = (props?: Partial<RequestCreateAccount>): Req
     return {
         id: props?.id ?? faker.string.uuid(),
         email: props?.email ?? faker.internet.email(),
-        password: props?.password ?? faker.word.words(),
+        password: props?.password ?? faker.word.words(8),
         username: props?.username ?? faker.person.firstName()
     }
 };
@@ -14,6 +14,6 @@ export const requestCreateAccount = (props?: Partial<RequestCreateAccount>): Req
 export const requestLoginAccount = (props?: Partial<RequestLoginAccount>): RequestLoginAccount => {
     return {
         email: props?.email ?? faker.internet.email(),
-        password: props?.password ?? faker.word.words()
+        password: props?.password ?? faker.word.words(8)
     }
 };
