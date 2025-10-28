@@ -96,4 +96,15 @@ describe('RemoteAccountValidationZod', () => {
 
         expect(() => sut.loginAccount(request)).toThrow(ValidationError);
     });
+
+    it('Should be error when login account with few letters in password', () => {
+        const sut = makeSut();
+
+        const request = {
+            ...requestLoginAccount(),
+            password: faker.internet.password().slice(0, 4)
+        };
+
+        expect(() => sut.createAccount(request)).toThrow(ValidationError);
+    });
 });
