@@ -86,4 +86,14 @@ describe('RemoteAccountValidationZod', () => {
 
         expect(() => sut.loginAccount(request)).toThrow(ValidationError);
     });
+
+    it('Should be error when login account without email', () => {
+        const sut = makeSut();
+
+        const request = requestLoginAccount();
+
+        delete request.email;
+
+        expect(() => sut.loginAccount(request)).toThrow(ValidationError);
+    });
 });
