@@ -18,4 +18,10 @@ describe('RemoteValidateTokenValidationZod', () => {
 
         expect(() => sut.validateToken(null)).toThrow(ValidationError);
     });
+
+    it('Should be error when send another type token in validate token', () => {
+        const sut = makeSut();
+
+        expect(() => sut.validateToken(faker.number.int())).toThrow(ValidationError);
+    });
 });
