@@ -12,4 +12,10 @@ describe('RemoteValidateTokenValidationZod', () => {
 
         expect(() => sut.validateToken(faker.string.uuid())).not.toThrow(ValidationError);
     });
+
+    it('Should be error without token in validate token', () => {
+        const sut = makeSut();
+
+        expect(() => sut.validateToken(null)).toThrow(ValidationError);
+    });
 });
