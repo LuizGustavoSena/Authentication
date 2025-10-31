@@ -1,9 +1,9 @@
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import https from 'https';
-import { env } from './infra/zod/env';
-import { makeRemoteAccountController } from './main/factories/controllers/remote-account';
-import { makeRemoteValidateTokenControler } from './main/factories/controllers/remote-validate-token';
+import { env } from '../infra/zod/env';
+import { makeRemoteAccountController } from './factories/controllers/remote-account';
+import { makeRemoteValidateTokenControler } from './factories/controllers/remote-validate-token';
 
 const remoteAccountController = makeRemoteAccountController();
 const remoteValidateTokenController = makeRemoteValidateTokenControler();
