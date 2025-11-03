@@ -1,4 +1,3 @@
-import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
 import { ValidateToken } from "../../domain/use-cases";
@@ -10,7 +9,7 @@ export default class ValidateTokenController {
         private remoteValidation: ValidateToken
     ) { };
 
-    async validateToken(req: FastifyRequest, rep: FastifyReply) {
+    async validateToken(req: any, rep: any) {
         const { authorization } = req.headers;
 
         try {
