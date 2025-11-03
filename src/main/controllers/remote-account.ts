@@ -1,4 +1,3 @@
-import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
 import { SameEmailError } from "../../domain/error/same-email-error";
@@ -12,7 +11,7 @@ export default class RemoteAccountController {
         private remoteAccount: CreateAccount & LoginAccount,
     ) { };
 
-    async createAccount(req: FastifyRequest, rep: FastifyReply) {
+    async createAccount(req: any, rep: any) {
         try {
             this.validation.createAccount(req.body);
 
@@ -37,7 +36,7 @@ export default class RemoteAccountController {
         }
     }
 
-    async loginAccount(req: FastifyRequest, rep: FastifyReply) {
+    async loginAccount(req: any, rep: any) {
         try {
             this.validation.loginAccount(req.body);
 
