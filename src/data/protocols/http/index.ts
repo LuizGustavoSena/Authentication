@@ -11,6 +11,7 @@ export enum HttpStatusCode {
     Forbbiden = 403,
     NotFound = 404,
     ServerError = 500,
+    ServiceUnavailable = 503,
 };
 
 export type Request = {
