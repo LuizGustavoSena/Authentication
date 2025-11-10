@@ -1,5 +1,6 @@
 import express from 'express';
 import helmet from 'helmet';
+import { tooBusyCheck } from './middlewares/too-busy-check';
 import AuthRouter from './routes/auth-route';
 import TokenRouter from './routes/token-route';
 
@@ -7,6 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(helmet());
+app.use(tooBusyCheck);
 
 app.use('/auth', AuthRouter);
 app.use('/auth', TokenRouter);
