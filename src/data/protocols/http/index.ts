@@ -12,6 +12,7 @@ export enum HttpStatusCode {
     NotFound = 404,
     ServerError = 500,
     ServiceUnavailable = 503,
+    PayloadTooLarge = 413
 };
 
 export type Request = {
