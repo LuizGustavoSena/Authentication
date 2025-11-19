@@ -35,7 +35,7 @@ const schema = process.env.NODE_ENV === "test" ? tstSchema : prdSchema;
 
 const _env = schema.safeParse({
     ...process.env,
-    URLS_ENABLE_CORS: process.env.URLS_ENABLE_CORS.split(',')
+    URLS_ENABLE_CORS: process.env.URLS_ENABLE_CORS?.split(',') ?? []
 });
 
 if (!_env.success) {
