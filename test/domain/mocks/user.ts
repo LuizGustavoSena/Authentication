@@ -6,5 +6,5 @@ export const createUser = (params?: Partial<User>): User => ({
     email: params?.email ?? faker.internet.email(),
     password: params?.password ?? faker.internet.password(),
     username: params?.username ?? faker.internet.userName(),
-    refreshToken: params?.refreshToken ?? faker.string.uuid()
+    refreshtoken: params?.refreshtoken ?? faker.string.uuid()
 });
