@@ -41,8 +41,8 @@ describe('RefreshTokenUseCase', () => {
         const response = await sut.getRefreshTokenByUserId(userId);
 
         expect(bdClietnSpy.body.userId).toBe(userId);
-        expect(bdClietnSpy.body.refreshToken).toBe(guid);
-        expect(response.refreshToken).toBe(guid);
+        expect(bdClietnSpy.body.refreshtoken).toBe(guid);
+        expect(response.refreshtoken).toBe(guid);
     });
 
     it('Should be successful update refresh token', async () => {
@@ -54,13 +54,13 @@ describe('RefreshTokenUseCase', () => {
 
         guidSpy.guid = newRefreshToken;
 
-        await bdClietnSpy.createUser(createUser({ refreshToken: oldRefreshToken, id: userId }));
+        await bdClietnSpy.createUser(createUser({ refreshtoken: oldRefreshToken, id: userId }));
         const response = await sut.updateRefreshTokenByRefreshToken(oldRefreshToken);
 
         expect(bdClietnSpy.body.userId).toBe(userId);
-        expect(bdClietnSpy.body.refreshToken).toBe(newRefreshToken);
+        expect(bdClietnSpy.body.refreshtoken).toBe(newRefreshToken);
         expect(tokenSpy.token).toBe(`${userId}token`);
-        expect(response.refreshToken).toBe(newRefreshToken);
+        expect(response.refreshtoken).toBe(newRefreshToken);
     });
 
     it('Should be error update refresh token without user', async () => {
