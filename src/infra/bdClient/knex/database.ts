@@ -1,14 +1,13 @@
 import { Knex, knex as setupKnex } from 'knex';
+import { env } from '../../zod/env';
 
 export const config: Knex.Config = {
-    client: 'sqlite3',
-    connection: {
-        filename: './db/app.db'
-    },
-    useNullAsDefault: true,
+    client: "pg",
+    connection: env.DATABASE_URL,
     migrations: {
-        extension: 'ts',
-        directory: './db/migrations'
-    }
-}
+        directory: "./db/migrations",
+        extension: "ts",
+    },
+};
+
 export const knex = setupKnex(config);
