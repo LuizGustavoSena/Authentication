@@ -7,3 +7,6 @@ dist
 yarn.lock
 .env
 db/app.db
+
+#Envs
+.env.*
