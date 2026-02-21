@@ -1,17 +1,16 @@
 require('dotenv/config');
-import { faker } from "@faker-js/faker";
 import { z } from "zod";
 import { InvalidEnvError } from "../../domain/error/invalid-env";
 
 const schema = z.object({
-    DATABASE_URL: z.string().default(faker.internet.url()),
-    SECRET_KEY_TOKEN: z.string().default(faker.string.uuid()),
-    EXPIRES_TOKEN_MILLISECONDS: z.coerce.number().default(99999),
-    SECRET_KEY_ENCRYPT: z.string().default(faker.string.uuid()),
-    SECRET_IV_ENCRYPT: z.string().default(faker.string.uuid()),
+    DATABASE_URL: z.string(),
+    SECRET_KEY_TOKEN: z.string(),
+    EXPIRES_TOKEN_MILLISECONDS: z.coerce.number(),
+    SECRET_KEY_ENCRYPT: z.string(),
+    SECRET_IV_ENCRYPT: z.string(),
     URLS_ENABLE_CORS: z.array(z.string()),
-    NODE_ENV: z.enum(['dev', 'tst', 'prd']),
-    URL_WEB_SITE: z.string().default(faker.internet.url()),
+    NODE_ENV: z.enum(['dev', 'test', 'prd']),
+    URL_WEB_SITE: z.string(),
     PORT: z.coerce.number().default(3000),
 });
 

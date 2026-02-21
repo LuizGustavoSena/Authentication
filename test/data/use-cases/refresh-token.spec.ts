@@ -34,13 +34,13 @@ describe('RefreshTokenUseCase', () => {
         const { sut, guidSpy, bdClietnSpy } = makeSut();
 
         const guid = faker.string.uuid();
-        const userId = faker.string.uuid();
+        const email = faker.internet.email();
 
         guidSpy.guid = guid;
 
-        const response = await sut.getRefreshTokenByEmail(userId);
+        const response = await sut.getRefreshTokenByEmail(email);
 
-        expect(bdClietnSpy.body.userId).toBe(userId);
+        expect(bdClietnSpy.body.email).toBe(email);
         expect(bdClietnSpy.body.refreshtoken).toBe(guid);
         expect(response.refreshtoken).toBe(guid);
     });
@@ -50,16 +50,16 @@ describe('RefreshTokenUseCase', () => {
 
         const oldRefreshToken = faker.string.uuid();
         const newRefreshToken = faker.string.uuid();
-        const userId = faker.string.uuid();
+        const email = faker.internet.email();
 
         guidSpy.guid = newRefreshToken;
 
-        await bdClietnSpy.createUser(createUser({ refreshtoken: oldRefreshToken, id: userId }));
-        const response = await sut.updateRefreshTokenByEmail(oldRefreshToken);
+        await bdClietnSpy.createUser(createUser({ refreshtoken: oldRefreshToken, email }));
+        const response = await sut.updateRefreshTokenByEmail(email);
 
-        expect(bdClietnSpy.body.userId).toBe(userId);
+        expect(bdClietnSpy.body.email).toBe(email);
         expect(bdClietnSpy.body.refreshtoken).toBe(newRefreshToken);
-        expect(tokenSpy.token).toBe(`${userId}token`);
+        expect(tokenSpy.token).toBe(`${email}token`);
         expect(response.refreshtoken).toBe(newRefreshToken);
     });
 
