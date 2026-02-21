@@ -4,7 +4,9 @@
 <img height="400" src="assets/authentication.png" />
 </div>
 </br>
-It's a simple API for create users and authenticate them with JWT.
+This project is a RESTful API built to handle user creation and authentication using JWT (JSON Web Tokens).
+
+The application was developed with a focus on scalability, validation, testing, and containerization, using modern technologies and best practices.
 
 ## Table of Contents
 
@@ -19,13 +21,13 @@ It's a simple API for create users and authenticate them with JWT.
 
 ## Stack
 <div style="display: inline_block">
-    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" />
-    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
-    <img height="40" width="50" src="https://raw.githubusercontent.com/fastify/graphics/refs/heads/master/fastify-1000px-square-01.png" />
-    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg" />
-    <img height="40" width="50"src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" />
-    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitest/vitest-original.svg" />
-    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" />
+    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" title="Typescript" />
+    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" title="Node" />
+    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastify/fastify-original.svg" title="Fastify"/>
+    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/knexjs/knexjs-original.svg" title="Knex" />
+    <img height="40" width="50"src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" title="Postgress" />
+    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitest/vitest-original.svg" title="Vitest" />
+    <img height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" title="Docker" />
 </div>
 
 ---
@@ -44,9 +46,13 @@ It's a simple API for create users and authenticate them with JWT.
    ```bash
    npm install
    ```
-4. Start MongoDB:
+4. Start Postgress:
    ```bash
-   docker-compose up --build
+   docker compose up -d
+   ```
+4. Run migrations:
+   ```bash
+   npm run knex:latest:dev
    ```
 
 ---
@@ -55,7 +61,7 @@ It's a simple API for create users and authenticate them with JWT.
 
 ### Run the Development Server
 ```bash
-npm start
+npm run dev
 ```
 
 ### Build for Production
