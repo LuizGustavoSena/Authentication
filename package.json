@@ -7,9 +7,8 @@
     "dev": "node --env-file=.env.dev --import tsx src/main/server.ts",
     "build": "tsc",
     "knex:make:dev": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:make",
-    "knex:make:tst": "node --env-file=.env.tst ./node_modules/knex/bin/cli.js migrate:make",
     "knex:latest:dev": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:latest",
-    "knex:latest:tst": "node --env-file=.env.tst ./node_modules/knex/bin/cli.js migrate:latest",
+    "knex:latest:prd": "node --env-file=.env.prd ./node_modules/knex/bin/cli.js migrate:latest",
     "start": "node dist/server.js",
     "test": "vitest"
   },
