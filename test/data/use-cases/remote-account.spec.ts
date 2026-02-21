@@ -2,8 +2,8 @@ import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 import { RefreshTokenUseCase } from '../../../src/data/use-cases/refresh-token';
 import { RemoteAccount } from "../../../src/data/use-cases/remote-account";
-import { InvalidCredentialsError } from '../../../src/domain/error/invalid-credentials-error';
 import { SameEmailError } from '../../../src/domain/error/same-email-error';
+import { UnauthorizedError } from '../../../src/domain/error/unauthorized-error';
 import { requestCreateUser, requestLoginAccount } from '../../domain/mocks/remote-account';
 import { BdClientSpy } from "../mocks/mock-bd";
 import { EncryptSpy } from '../mocks/mock-encrypt';
@@ -91,6 +91,6 @@ describe('RemoteAccount', () => {
 
         await sut.createAccount(request);
 
-        await expect(sut.loginAccount(anotherAccount)).rejects.toThrow(new InvalidCredentialsError());
+        await expect(sut.loginAccount(anotherAccount)).rejects.toThrow(new UnauthorizedError());
     });
 });

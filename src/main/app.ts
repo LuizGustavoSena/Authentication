@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import { checkContentLength } from './middlewares/content-length';
 import { configurationCors } from './middlewares/cors';
+import { errorHandler } from './middlewares/error-handler';
 import { rateLimiter } from './middlewares/rate-limit';
 import { tooBusyCheck } from './middlewares/too-busy-check';
 import AuthRouter from './routes/auth-route';
@@ -18,5 +19,7 @@ app.use(checkContentLength);
 
 app.use('/auth', AuthRouter);
 app.use('/auth', TokenRouter);
+
+app.use(errorHandler);
 
 export default app;

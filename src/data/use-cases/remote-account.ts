@@ -1,5 +1,5 @@
-import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
 import { SameEmailError } from "../../domain/error/same-email-error";
+import { UnauthorizedError } from "../../domain/error/unauthorized-error";
 import { RequestLoginAccount, ResponseLoginAccount } from "../../domain/models";
 import { CreateAccount, LoginAccount, RequestCreateAccount, ResponseCreateAccount } from "../../domain/use-cases";
 import { RefreshToken } from "../../domain/use-cases/refresh-token";
@@ -42,7 +42,7 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
         });
 
         if (!haveUser)
-            throw new InvalidCredentialsError();
+            throw new UnauthorizedError();
 
         const { refreshtoken } = await this.refreshToken.getRefreshTokenByEmail(haveUser.email);
 

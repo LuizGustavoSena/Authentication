@@ -1,6 +1,4 @@
-import { ZodError } from "zod";
-import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
-import { SameEmailError } from "../../domain/error/same-email-error";
+import { NextFunction, Request, Response } from "express";
 import { RequestLoginAccount } from "../../domain/models";
 import { CreateAccount, LoginAccount, RequestCreateAccount } from "../../domain/use-cases";
 import { RemoteAccountValidation } from "../../domain/validations/remote-account-validation";
@@ -11,7 +9,7 @@ export default class RemoteAccountController {
         private remoteAccount: CreateAccount & LoginAccount,
     ) { };
 
-    createAccount = async (req: any, rep: any) => {
+    createAccount = async (req: Request, rep: Response, next: NextFunction) => {
         try {
             this.validation.createAccount(req.body);
 
@@ -20,23 +18,11 @@ export default class RemoteAccountController {
             rep.statusCode = 201;
             rep.send(response);
         } catch (error: any) {
-            let code = 500;
-            let message = 'Erro inesperado';
-
-            if (error instanceof SameEmailError || error instanceof ZodError) {
-                code = error instanceof ZodError ? 415 : 400;
-                message = error.message;
-            };
-
-            if (!(error instanceof SameEmailError) && !(error instanceof ZodError))
-                req.log.info(error.message);
-
-            rep.statusCode = code;
-            rep.send(message);
+            return next(error);
         }
     }
 
-    loginAccount = async (req: any, rep: any) => {
+    loginAccount = async (req: any, rep: any, next: NextFunction) => {
         try {
             this.validation.loginAccount(req.body);
 
@@ -45,19 +31,7 @@ export default class RemoteAccountController {
             rep.statusCode = 201;
             rep.send(token);
         } catch (error: any) {
-            let code = 500;
-            let message = 'Erro inesperado';
-
-            if (error instanceof InvalidCredentialsError || error instanceof ZodError) {
-                code = error instanceof ZodError ? 415 : 400;
-                message = error.message;
-            };
-
-            if (!(error instanceof InvalidCredentialsError) && !(error instanceof ZodError))
-                req.log.info(error.message);
-
-            rep.statusCode = code;
-            rep.send(message);
+            return next(error);
         }
     }
 }

@@ -2,7 +2,7 @@ require('dotenv/config');
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 import { RemoteValidateToken } from "../../../src/data/use-cases/remote-validate-token";
-import { InvalidCredentialsError } from '../../../src/domain/error/invalid-credentials-error';
+import { UnauthorizedError } from '../../../src/domain/error/unauthorized-error';
 import { env } from '../../../src/infra/zod/env';
 import { TokenSpy } from "../mocks/mock-token";
 
@@ -40,6 +40,6 @@ describe('RemoteValidateToken', () => {
 
         tokenSpy.token = `${faker.internet.email()}token`;
 
-        expect(() => sut.validate(faker.internet.email())).toThrow(new InvalidCredentialsError());
+        expect(() => sut.validate(faker.internet.email())).toThrow(new UnauthorizedError());
     });
 });

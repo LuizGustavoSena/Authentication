@@ -1,4 +1,4 @@
-import { InvalidCredentialsError } from "../../domain/error/invalid-credentials-error";
+import { UnauthorizedError } from "../../domain/error/unauthorized-error";
 import { GetRefreshTokenResponse, UpdateRefreshTokenResponse } from "../../domain/models";
 import { RefreshToken } from "../../domain/use-cases/refresh-token";
 import { BdClient } from "../protocols/bd";
@@ -26,7 +26,7 @@ export class RefreshTokenUseCase implements RefreshToken {
         const user = await this.bdClient.getUserByFilter({ email });
 
         if (!user)
-            throw new InvalidCredentialsError();
+            throw new UnauthorizedError();
 
         const { refreshtoken } = await this.getRefreshTokenByEmail(user.email);
 
