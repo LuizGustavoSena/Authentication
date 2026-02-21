@@ -10,7 +10,6 @@ export class KnexBdClient implements BdClient {
 
     createUser = async (params: User): Promise<ResponseCreateUser> => {
         try {
-            delete params.id
             const response = await this.repository.insert(params, ['id', 'username', 'email']).into('users');
 
             return response[0];
