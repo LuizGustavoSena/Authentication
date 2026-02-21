@@ -9,17 +9,18 @@ export class KnexBdClient implements BdClient {
 
     constructor() { };
 
-    async createUser(params: RequestCreateAccount): Promise<ResponseCreateUser> {
+    createUser = async (params: RequestCreateAccount): Promise<ResponseCreateUser> => {
         try {
             const response = await this.repository.insert(params, ['id', 'username', 'email']).into('users');
 
             return response[0];
         } catch (error) {
+            console.error('[KNEX][createUser]', error);
             throw new DatabaseError();
         }
     }
 
-    async getUserByFilter(params: Partial<RequestHaveUser>): Promise<UserResponse> {
+    getUserByFilter = async (params: Partial<RequestHaveUser>): Promise<UserResponse> => {
         try {
             const response = await this.repository('users').where(params).select(['id', 'username', 'email', 'refreshtoken']);
 
@@ -29,7 +30,7 @@ export class KnexBdClient implements BdClient {
         }
     }
 
-    async patchRefreshToken(params: PatchRefreshToken): Promise<void> {
+    patchRefreshToken = async (params: PatchRefreshToken): Promise<void> => {
         try {
             const { userId, refreshtoken } = params;
             await this.repository('users').where({ id: userId }).update({ refreshtoken });

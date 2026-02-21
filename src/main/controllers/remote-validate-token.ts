@@ -9,7 +9,7 @@ export default class ValidateTokenController {
         private remoteValidation: ValidateToken
     ) { };
 
-    async validateToken(req: any, rep: any) {
+    validateToken = async (req: any, rep: any) => {
         const { authorization } = req.headers;
 
         try {

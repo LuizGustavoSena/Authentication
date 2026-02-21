@@ -26,7 +26,7 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
             throw new SameEmailError();
 
         const user = await this.bdClient.createUser({
-            id: params.id,
+            id: this.guid.generate(),
             email,
             password: this.crypt.encrypt(params.password),
             username: params.username

@@ -7,7 +7,7 @@ export class JsonWebToken implements Token {
     expirationInMilliseconds = Number(env.EXPIRES_TOKEN_MILLISECONDS);
     secretKey = String(env.SECRET_KEY_TOKEN);
 
-    generate(params: RequestToken): ResponseToken {
+    generate = (params: RequestToken): ResponseToken => {
         const issued = Date.now();
 
         const token = encode(
@@ -23,7 +23,7 @@ export class JsonWebToken implements Token {
         return { token };
     }
 
-    validate(token: string): ResponseValidate {
+    validate = (token: string): ResponseValidate => {
         try {
             const result = decode(token, this.secretKey, false, 'HS512');
 

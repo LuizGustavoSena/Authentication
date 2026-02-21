@@ -3,7 +3,6 @@ export interface CreateAccount {
 }
 
 export type RequestCreateAccount = {
-    id: string;
     username: string;
     email: string;
     password: string;

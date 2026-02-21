@@ -16,7 +16,7 @@ export class CryptoEncrypt implements Encrypt {
         .digest('hex')
         .substring(0, 16)
 
-    encrypt(data: string): string {
+    encrypt = (data: string): string => {
         const cipher = crypto.createCipheriv('aes-256-cbc', this.key, this.encryptionIV);
 
         return Buffer.from(
@@ -24,7 +24,7 @@ export class CryptoEncrypt implements Encrypt {
         ).toString('base64');
     };
 
-    decrypt(data: string): string {
+    decrypt = (data: string): string => {
         const buff = Buffer.from(data, 'base64');
 
         const decipher = crypto.createDecipheriv('aes-256-cbc', this.key, this.encryptionIV);

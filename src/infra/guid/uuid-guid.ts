@@ -4,7 +4,7 @@ import { GuidClient } from '../../data/protocols/guid';
 export class UuidGuid implements GuidClient {
     constructor() { };
 
-    generate(): string {
+    generate = (): string => {
         return uuidv4();
     }
 }

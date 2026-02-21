@@ -5,11 +5,11 @@ import { RemoteValidateTokenValidation } from "../../domain/validations/remote-v
 export default class RemoteValidateTokenValidationZod implements RemoteValidateTokenValidation {
     token = z.string();
 
-    validateToken(data: any): void | Error {
+    validateToken = (data: any): void | Error => {
         this.throwValidationError(() => this.token.parse(data));
     }
 
-    private throwValidationError(callback: Function) {
+    private throwValidationError = (callback: Function) => {
         try {
             callback();
         } catch (error: any) {

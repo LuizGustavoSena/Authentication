@@ -11,7 +11,7 @@ export default class RemoteAccountController {
         private remoteAccount: CreateAccount & LoginAccount,
     ) { };
 
-    async createAccount(req: any, rep: any) {
+    createAccount = async (req: any, rep: any) => {
         try {
             this.validation.createAccount(req.body);
 
@@ -36,7 +36,7 @@ export default class RemoteAccountController {
         }
     }
 
-    async loginAccount(req: any, rep: any) {
+    loginAccount = async (req: any, rep: any) => {
         try {
             this.validation.loginAccount(req.body);
 
