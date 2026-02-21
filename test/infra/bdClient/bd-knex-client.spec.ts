@@ -20,7 +20,6 @@ describe('BdKnexClient', () => {
         const test = await sut.createUser(request);
 
         expect(test).not.toHaveProperty('password');
-        expect(test.id).toBe(request.id);
         expect(test.email).toBe(request.email);
         expect(test.username).toBe(request.username);
     });
@@ -38,7 +37,7 @@ describe('BdKnexClient', () => {
         });
 
         expect(response).not.toHaveProperty('password');
-        expect(response.id).toBe(request.id);
+        expect(response.id).toBe(request.email);
         expect(response.email).toBe(request.email);
         expect(response.username).toBe(request.username);
     });
@@ -52,11 +51,11 @@ describe('BdKnexClient', () => {
         await sut.createUser(request);
 
         await sut.patchRefreshToken({
-            userId: request.id,
+            email: request.email,
             refreshtoken
         });
 
-        const response = await sut.getUserByFilter({ id: request.id });
+        const response = await sut.getUserByFilter({ email: request.email });
 
         expect(response.refreshtoken).toBe(refreshtoken);
     });
@@ -70,13 +69,12 @@ describe('BdKnexClient', () => {
         await sut.createUser(request);
 
         await sut.patchRefreshToken({
-            userId: request.id,
+            email: request.email,
             refreshtoken
         });
 
         const response = await sut.getUserByFilter({ refreshtoken });
 
-        expect(response.id).toBe(request.id);
         expect(response.email).toBe(request.email);
         expect(response.username).toBe(request.username);
         expect(response.refreshtoken).toBe(refreshtoken);

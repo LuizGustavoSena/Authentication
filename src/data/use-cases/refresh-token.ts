@@ -12,26 +12,26 @@ export class RefreshTokenUseCase implements RefreshToken {
         private token: Token,
     ) { };
 
-    async getRefreshTokenByUserId(userId: string): Promise<GetRefreshTokenResponse> {
+    async getRefreshTokenByEmail(email: string): Promise<GetRefreshTokenResponse> {
         const refreshtoken = this.guid.generate();
 
-        await this.bdClient.patchRefreshToken({ userId, refreshtoken });
+        await this.bdClient.patchRefreshToken({ email, refreshtoken });
 
         return {
             refreshtoken
         }
     }
 
-    async updateRefreshTokenByRefreshToken(refresh_token: string): Promise<UpdateRefreshTokenResponse> {
-        const user = await this.bdClient.getUserByFilter({ refreshtoken: refresh_token });
+    async updateRefreshTokenByEmail(email: string): Promise<UpdateRefreshTokenResponse> {
+        const user = await this.bdClient.getUserByFilter({ email });
 
         if (!user)
             throw new InvalidCredentialsError();
 
-        const { refreshtoken } = await this.getRefreshTokenByUserId(user.id);
+        const { refreshtoken } = await this.getRefreshTokenByEmail(user.email);
 
         const { token } = this.token.generate({
-            userId: user.id
+            email: user.email
         });
 
         return {

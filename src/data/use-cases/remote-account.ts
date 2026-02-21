@@ -44,10 +44,10 @@ export class RemoteAccount implements CreateAccount, LoginAccount {
         if (!haveUser)
             throw new InvalidCredentialsError();
 
-        const { refreshtoken } = await this.refreshToken.getRefreshTokenByUserId(haveUser.id);
+        const { refreshtoken } = await this.refreshToken.getRefreshTokenByEmail(haveUser.email);
 
         const { token } = this.token.generate({
-            userId: haveUser.id
+            email: haveUser.email
         });
 
         return {

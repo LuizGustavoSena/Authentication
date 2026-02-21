@@ -1,6 +1,6 @@
 import { GetRefreshTokenResponse, UpdateRefreshTokenResponse } from "../models";
 
 export interface RefreshToken {
-    getRefreshTokenByUserId(userId: string): Promise<GetRefreshTokenResponse>;
-    updateRefreshTokenByRefreshToken(refresh_token: string): Promise<UpdateRefreshTokenResponse>;
+    getRefreshTokenByEmail(email: string): Promise<GetRefreshTokenResponse>;
+    updateRefreshTokenByEmail(email: string): Promise<UpdateRefreshTokenResponse>;
 }

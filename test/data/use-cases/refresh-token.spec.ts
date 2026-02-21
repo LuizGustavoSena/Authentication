@@ -38,7 +38,7 @@ describe('RefreshTokenUseCase', () => {
 
         guidSpy.guid = guid;
 
-        const response = await sut.getRefreshTokenByUserId(userId);
+        const response = await sut.getRefreshTokenByEmail(userId);
 
         expect(bdClietnSpy.body.userId).toBe(userId);
         expect(bdClietnSpy.body.refreshtoken).toBe(guid);
@@ -55,7 +55,7 @@ describe('RefreshTokenUseCase', () => {
         guidSpy.guid = newRefreshToken;
 
         await bdClietnSpy.createUser(createUser({ refreshtoken: oldRefreshToken, id: userId }));
-        const response = await sut.updateRefreshTokenByRefreshToken(oldRefreshToken);
+        const response = await sut.updateRefreshTokenByEmail(oldRefreshToken);
 
         expect(bdClietnSpy.body.userId).toBe(userId);
         expect(bdClietnSpy.body.refreshtoken).toBe(newRefreshToken);
@@ -66,7 +66,7 @@ describe('RefreshTokenUseCase', () => {
     it('Should be error update refresh token without user', async () => {
         const { sut } = makeSut();
 
-        const promise = sut.updateRefreshTokenByRefreshToken(faker.string.uuid());
+        const promise = sut.updateRefreshTokenByEmail(faker.string.uuid());
 
         await expect(promise).rejects.toThrow(new InvalidCredentialsError());
     });

@@ -9,7 +9,7 @@ export type User = {
 export type UserResponse = Omit<User, 'password'>;
 
 export type PatchRefreshToken = {
-    userId: string;
+    email: string;
     refreshtoken: string;
 }
 

@@ -17,21 +17,21 @@ describe('JsonWebToken', () => {
     it('Should correct token', () => {
         const { sut } = makeSut();
 
-        const userId = faker.string.uuid();
+        const email = faker.internet.email();
 
-        const response = sut.generate({ userId });
+        const response = sut.generate({ email });
 
         const validToken = sut.validate(response.token);
 
         expect(response.token).toBeTypeOf('string');
-        expect(validToken.userId).toBe(userId);
+        expect(validToken.email).toBe(email);
     });
 
     it('Should correct token with validate method', () => {
         const { sut } = makeSut();
 
         const response = sut.generate({
-            userId: faker.string.uuid()
+            email: faker.internet.email()
         });
 
         const validatedToken = sut.validate(response.token);
@@ -55,7 +55,7 @@ describe('JsonWebToken', () => {
         sut.expirationInMilliseconds = -10;
 
         const response = sut.generate({
-            userId: faker.string.uuid()
+            email: faker.internet.email()
         });
 
         const validatedToken = sut.validate(response.token);

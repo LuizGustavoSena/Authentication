@@ -26,15 +26,17 @@ export class KnexBdClient implements BdClient {
 
             return response[0];
         } catch (error) {
+            console.error('[KNEX][getUserByFilter]', error);
             throw new DatabaseError();
         }
     }
 
     patchRefreshToken = async (params: PatchRefreshToken): Promise<void> => {
         try {
-            const { userId, refreshtoken } = params;
-            await this.repository('users').where({ id: userId }).update({ refreshtoken });
+            const { email, refreshtoken } = params;
+            await this.repository('users').where({ email }).update({ refreshtoken });
         } catch (error) {
+            console.error('[KNEX][patchRefreshToken]', error);
             throw new DatabaseError();
         }
     }

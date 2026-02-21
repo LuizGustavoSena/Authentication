@@ -79,7 +79,7 @@ describe('RemoteAccount', () => {
 
         const response = await sut.loginAccount(loginRequest);
 
-        expect(tokenSpy.token).toBe(`${createRequest.id}token`);
+        expect(tokenSpy.token).toBe(`${createRequest.email}token`);
         expect(response.token).toBe(tokenSpy.token);
     });
 

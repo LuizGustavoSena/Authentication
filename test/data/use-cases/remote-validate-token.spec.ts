@@ -31,7 +31,7 @@ describe('RemoteValidateToken', () => {
 
         const response = sut.validate(userId);
 
-        expect(response.userId).toBe(userId);
+        expect(response.email).toBe(userId);
         expect(response.expires).toBe(response.issued + env.EXPIRES_TOKEN_MILLISECONDS);
     });
 
