@@ -73,27 +73,42 @@ npm run build
 ```bash
 npm test
 ```
-
 ---
-
-## API Documentation
-
-### Auth
-- Endpoint: `POST /create_account`
-  - Description: Create account
-  - Body parameters: `username: string; email: string; password: string;`
-  - Error handling: Create a user with an existing email
-- Endpoint: `POST /login_account`
-  - Description: Login account
-  - Body parameters: `email: string; password: string;`
-### Token
-- Endpoint: `GET /validate_token`
-  - Description: Validate token
-  - Error handling: Create a account with an existing name
-  - Body parameters: `name: string;`
-
+## API Endpoints
 ---
+### Authentication
 
+#### ➤ POST `/create_account`
+Creates a new user account.
+##### Request Body
+```json
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+#### ➤ POST `/login_account`
+Login account.
+##### Request Body
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+### Token Validation
+
+#### ➤ GET `/validate_token`
+Validate token.
+##### Request Headers
+```json
+{
+  "authorization": "Bearer {token}"
+}
+```
+---
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
