@@ -1,7 +1,6 @@
 import { BdClient, RequestHaveUser, ResponseCreateUser } from "../../../data/protocols/bd";
 import { DatabaseError } from "../../../domain/error/same-email-error copy";
-import { PatchRefreshToken, UserResponse } from "../../../domain/models";
-import { RequestCreateAccount } from "../../../domain/use-cases";
+import { PatchRefreshToken, User, UserResponse } from "../../../domain/models";
 import { knex } from "./database";
 
 export class KnexBdClient implements BdClient {
@@ -9,7 +8,7 @@ export class KnexBdClient implements BdClient {
 
     constructor() { };
 
-    createUser = async (params: RequestCreateAccount): Promise<ResponseCreateUser> => {
+    createUser = async (params: User): Promise<ResponseCreateUser> => {
         try {
             const response = await this.repository.insert(params, ['id', 'username', 'email']).into('users');
 

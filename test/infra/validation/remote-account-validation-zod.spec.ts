@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 import { ValidationError } from '../../../src/domain/error/validation-error';
 import RemoteAccountValidationZod from "../../../src/infra/zod/remote-account-validation-zod";
-import { requestCreateAccount, requestLoginAccount } from '../../domain/mocks/remote-account';
+import { requestCreateUser, requestLoginAccount } from '../../domain/mocks/remote-account';
 
 export const makeSut = (): RemoteAccountValidationZod =>
     new RemoteAccountValidationZod();
@@ -11,7 +11,7 @@ describe('RemoteAccountValidationZod', () => {
     it('Should be successfull create account', () => {
         const sut = makeSut();
 
-        const request = requestCreateAccount();
+        const request = requestCreateUser();
 
         expect(() => sut.createAccount(request)).not.toThrow();
     });
@@ -20,7 +20,7 @@ describe('RemoteAccountValidationZod', () => {
         const sut = makeSut();
 
         const request = {
-            ...requestCreateAccount(),
+            ...requestCreateUser(),
             email: faker.string.sample()
         };
 
@@ -31,7 +31,7 @@ describe('RemoteAccountValidationZod', () => {
         const sut = makeSut();
 
         const request = {
-            ...requestCreateAccount(),
+            ...requestCreateUser(),
             password: faker.internet.password().slice(0, 4)
         };
 
@@ -41,7 +41,7 @@ describe('RemoteAccountValidationZod', () => {
     it('Should be error when create account without username', () => {
         const sut = makeSut();
 
-        const request = requestCreateAccount();
+        const request = requestCreateUser();
 
         delete request.username;
 
@@ -51,7 +51,7 @@ describe('RemoteAccountValidationZod', () => {
     it('Should be error when create account without email', () => {
         const sut = makeSut();
 
-        const request = requestCreateAccount();
+        const request = requestCreateUser();
 
         delete request.email;
 
@@ -61,7 +61,7 @@ describe('RemoteAccountValidationZod', () => {
     it('Should be error when create account without password', () => {
         const sut = makeSut();
 
-        const request = requestCreateAccount();
+        const request = requestCreateUser();
 
         delete request.password;
 

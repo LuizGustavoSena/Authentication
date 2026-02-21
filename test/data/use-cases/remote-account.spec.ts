@@ -4,7 +4,7 @@ import { RefreshTokenUseCase } from '../../../src/data/use-cases/refresh-token';
 import { RemoteAccount } from "../../../src/data/use-cases/remote-account";
 import { InvalidCredentialsError } from '../../../src/domain/error/invalid-credentials-error';
 import { SameEmailError } from '../../../src/domain/error/same-email-error';
-import { requestCreateAccount, requestLoginAccount } from '../../domain/mocks/remote-account';
+import { requestCreateUser, requestLoginAccount } from '../../domain/mocks/remote-account';
 import { BdClientSpy } from "../mocks/mock-bd";
 import { EncryptSpy } from '../mocks/mock-encrypt';
 import { GuidSpy } from '../mocks/mock-guid';
@@ -40,7 +40,7 @@ describe('RemoteAccount', () => {
     it('Should correct params', async () => {
         const { sut, bdClietnSpy, cryptSpy } = makeSut();
 
-        const request = requestCreateAccount();
+        const request = requestCreateUser();
 
         await sut.createAccount(request);
 
@@ -54,9 +54,9 @@ describe('RemoteAccount', () => {
 
         const email = faker.internet.email();
 
-        const request = requestCreateAccount({ email });
+        const request = requestCreateUser({ email });
 
-        const anotherRequest = requestCreateAccount({ email });
+        const anotherRequest = requestCreateUser({ email });
 
         await sut.createAccount(request);
 
@@ -69,7 +69,7 @@ describe('RemoteAccount', () => {
     it('Should be successfull get token with correct authentication', async () => {
         const { sut, tokenSpy } = makeSut();
 
-        const createRequest = requestCreateAccount();
+        const createRequest = requestCreateUser();
         const loginRequest = requestLoginAccount({
             email: createRequest.email,
             password: createRequest.password
@@ -86,7 +86,7 @@ describe('RemoteAccount', () => {
     it('Should correct error with invalid credential', async () => {
         const { sut } = makeSut();
 
-        const request = requestCreateAccount();
+        const request = requestCreateUser();
         const anotherAccount = requestLoginAccount();
 
         await sut.createAccount(request);
