@@ -5,6 +5,7 @@ dist
 
 # archives
 yarn.lock
+package-lock.json
 .env
 db/app.db
 
