@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(tooBusyCheck);
 app.use(rateLimiter)
-app.use(configurationCors);;
+app.use(configurationCors);
 app.use(checkContentLength);
 
 app.use('/auth', AuthRouter);
