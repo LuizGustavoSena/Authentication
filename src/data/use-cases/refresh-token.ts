@@ -22,8 +22,8 @@ export class RefreshTokenUseCase implements RefreshToken {
         }
     }
 
-    async updateRefreshTokenByEmail(email: string): Promise<UpdateRefreshTokenResponse> {
-        const user = await this.bdClient.getUserByFilter({ email });
+    async updateRefreshTokenByRefreshToken(oldToken: string): Promise<UpdateRefreshTokenResponse> {
+        const user = await this.bdClient.getUserByFilter({ refreshtoken: oldToken });
 
         if (!user)
             throw new UnauthorizedError();
