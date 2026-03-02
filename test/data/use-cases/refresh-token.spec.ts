@@ -55,7 +55,7 @@ describe('RefreshTokenUseCase', () => {
         guidSpy.guid = newRefreshToken;
 
         await bdClietnSpy.createUser(createUser({ refreshtoken: oldRefreshToken, email }));
-        const response = await sut.updateRefreshTokenByEmail(email);
+        const response = await sut.updateRefreshTokenByRefreshToken(oldRefreshToken);
 
         expect(bdClietnSpy.body.email).toBe(email);
         expect(bdClietnSpy.body.refreshtoken).toBe(newRefreshToken);
@@ -66,7 +66,7 @@ describe('RefreshTokenUseCase', () => {
     it('Should be error update refresh token without user', async () => {
         const { sut } = makeSut();
 
-        const promise = sut.updateRefreshTokenByEmail(faker.string.uuid());
+        const promise = sut.updateRefreshTokenByRefreshToken(faker.string.uuid());
 
         await expect(promise).rejects.toThrow(new UnauthorizedError());
     });
