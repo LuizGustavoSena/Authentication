@@ -12,6 +12,6 @@ router.post('/create_account', remoteAccountController.createAccount);
 router.post('/login_account', remoteAccountController.loginAccount);
 
 router.get('/validate_token', remoteValidateTokenController.validateToken);
-router.get('/refresh_token', remoteRefreshTokenController.refreshToken);
+router.post('/refresh_token', remoteRefreshTokenController.refreshToken);
 
 export default router;

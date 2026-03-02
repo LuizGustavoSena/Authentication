@@ -10,10 +10,10 @@ export default class RefreshTokenController {
         const { refreshtoken } = req.headers;
 
         try {
-            const token = this.remoteValidation.updateRefreshTokenByRefreshToken(refreshtoken as string);
+            const refreshToken = await this.remoteValidation.updateRefreshTokenByRefreshToken(refreshtoken as string);
 
             rep.statusCode = 201;
-            rep.send(token);
+            rep.send(refreshToken);
         } catch (error: any) {
             return next(error);
         }
