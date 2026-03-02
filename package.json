@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "node --env-file=.env.dev --import tsx src/main/server.ts",
-    "migrate:prd": "node --env-file=.env.prd ./node_modules/knex/bin/cli.js migrate:latest",
+    "migrate:prd": "node ./node_modules/knex/bin/cli.js migrate:latest",
     "build": "tsc",
-    "start:prd": "node --env-file=.env.prd dist/src/main/server.js",
+    "start:prd": "dist/src/main/server.js",
     "build:run:prd": "npm run migrate:prd && npm run build && npm run start:prd",
     "knex:make:dev": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:make",
     "knex:latest:dev": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:latest",
