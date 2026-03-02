@@ -10,7 +10,6 @@ const schema = z.object({
     SECRET_IV_ENCRYPT: z.string(),
     URLS_ENABLE_CORS: z.array(z.string()),
     NODE_ENV: z.enum(['dev', 'test', 'prd']),
-    URL_WEB_SITE: z.string(),
     PORT: z.coerce.number().default(3000),
 });
 
